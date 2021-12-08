@@ -1,9 +1,17 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
+    <router-link to="/cardsExplorer">Cards Explorer</router-link> |
+    <router-link to="/deckBuilder">Deck Builder</router-link> |
     <router-link to="/about">About</router-link>
   </div>
-  <router-view/>
+
+  <div class="container">
+    <div class="container-fluid">
+      <router-view/>
+    </div>
+  </div>
+
 </template>
 
 <style>

@@ -8,6 +8,16 @@ const routes = [
     component: Home
   },
   {
+    path: '/cardsExplorer',
+    name: 'cardsExplorer',
+    component: () => import('../views/CardsExplorer.vue')
+  },
+  {
+    path: '/deckBuilder',
+    name: 'deckBuilder',
+    component: () => import('../views/DeckBuilder.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
