@@ -27,13 +27,12 @@
                   <span class="input-group-text">Resources</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                      All
+                      {{ resource }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                      <li><a class="dropdown-item">All</a></li>
-                      <li><a class="dropdown-item">(1) Red</a></li>
-                      <li><a class="dropdown-item">(2) Yellow</a></li>
-                      <li><a class="dropdown-item">(3) Blue</a></li>
+                      <li v-for="resource in resources" :key="resource">
+                        <a class="dropdown-item" @click="onSelectResource(resource.name)">{{resource.name}}</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -43,13 +42,12 @@
                   <span class="input-group-text">Class</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton11" data-bs-toggle="dropdown" aria-expanded="false">
-                      All
+                      {{ clazz }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton11">
-                      <li><a class="dropdown-item">All</a></li>
-                      <li><a class="dropdown-item">Brute</a></li>
-                      <li><a class="dropdown-item">Warrior</a></li>
-                      <li><a class="dropdown-item">Guardian</a></li>
+                      <li v-for="clazz in classes" :key="clazz">
+                        <a class="dropdown-item" @click="onSelectClazz(clazz.name)">{{clazz.name}}</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -59,18 +57,12 @@
                   <span class="input-group-text">Card Type</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton10" data-bs-toggle="dropdown" aria-expanded="false">
-                     All
+                     {{ type }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-                      <li><a class="dropdown-item">All</a></li>
-                      <li><a class="dropdown-item">Actions</a></li>
-                      <li><a class="dropdown-item">Attacks</a></li>
-                      <li><a class="dropdown-item">Attacks Reactions</a></li>
-                      <li><a class="dropdown-item">Defense Reactions</a></li>
-                      <li><a class="dropdown-item">Auras</a></li>
-                      <li><a class="dropdown-item">Items</a></li>
-                      <li><a class="dropdown-item">Arrows</a></li>
-                      <li><a class="dropdown-item">Equipments</a></li>
+                      <li v-for="type in types" :key="type">
+                        <a class="dropdown-item" @click="onSelectType(type.name)">{{type.name}}</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -131,11 +123,11 @@
 
             <!-- Text -->
             <textarea class="form-control" rows="1" placeholder="Search by text"></textarea>
-            <div class="row justify-content-md-center">
+            <!--<div class="row justify-content-md-center">
               <div class="col-lg-6">
                 <button class="btn btn-primary" type="button" @click="handleSearchSubmit(query)" >Filter</button>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
 
@@ -197,12 +189,37 @@ import getReleases from "../composables/getReleases";
 import getRarities from "../composables/getRarities";
 import getFrames from "../composables/getFrames";
 import SideFilter from "../components/SideFilter";
+import getClasses from "../composables/filters/getClasses";
+import getTypes from "../composables/filters/getTypes";
+import getResources from "../composables/filters/getResources";
 
 
 export default {
   name: "CardSearcher",
   components: {SideFilter, CardTable, CardGrid },
   setup () {
+
+    //region HeroClasses
+    const { classes } = getClasses()
+    const clazz = ref("All")
+    const onSelectClazz = (selectedClass) => {
+      clazz.value = selectedClass
+    }
+
+    const { types } = getTypes()
+    const type = ref("All")
+    const onSelectType = (selectedType) => {
+      type.value = selectedType
+    }
+
+    const { resources } = getResources()
+    const resource = ref("All")
+    const onSelectResource = (selectedResource) => {
+      resource.value = selectedResource
+    }
+    //endregion
+
+
     let displayCards = ref();
     const {cards, loadCards, loadDefaultCards } = getCardsSearch()
 
@@ -242,6 +259,9 @@ export default {
     }
 
     return {
+      classes, clazz, onSelectClazz,
+      types, type, onSelectType,
+      resources, resource, onSelectResource,
       displayCards,
       onNumCardToDisplay, nCardToDisplay,
       checkedReleases, updateCheckedReleases,   // releases related

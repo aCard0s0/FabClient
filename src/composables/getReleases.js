@@ -1,10 +1,10 @@
 
 const getReleases = () => {
     const releases = [
-        {code: "wtr", name: "Welcome to Rathe"},
-        {code: "arc", name: "Arcane Rising"},
-        {code: "cru", name: "Crucible"},
-        {code: "mon", name: "Monarch"},
+        {code: "wtr", label: "WTR", name: "Welcome to Rathe"},
+        {code: "arc", label: "ARC", name: "Arcane Rising"},
+        {code: "cru", label: "CRU", name: "Crucible"},
+        {code: "mon", label: "MON", name: "Monarch"},
     ]
 
     return { releases }

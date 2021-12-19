@@ -1,19 +1,19 @@
 <template>
   <b-accordion flush free >
     <!-- Releases -->
-    <b-accordion-item title="Releases" visible>
+    <b-accordion-item title="Releases" visible class="accordion-custom">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
 
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" v-model="isAllReleasesChecked" @click="checkAllReleases()">
-            <label class="form-check-label">Any</label>
+            <label class="form-check-label font-custom">Any</label>
           </div>
 
           <div v-for="set in releases" :key="set">
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" :value="set.code" v-model="checkedReleases" @change="updateCheckedReleases()">
-              <label class="form-check-label" >{{ set.name }}</label>
+              <label class="form-check-label font-custom" >{{ set.label }}</label>
             </div>
           </div>
 
@@ -28,13 +28,13 @@
 
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" v-model="isAllRaritiesChecked" @click="checkAllRarities()">
-            <label class="form-check-label">Any</label>
+            <label class="form-check-label font-custom">Any</label>
           </div>
 
           <div v-for="rarity in rarities" :key="rarity">
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" :value="rarity.code" v-model="checkedRarities" @change="updateCheckedRarities()">
-              <label class="form-check-label">{{ rarity.name }}</label>
+              <label class="form-check-label font-custom">{{ rarity.name }}</label>
             </div>
           </div>
 
@@ -50,7 +50,7 @@
           <div v-for="frame in frames" :key="frame">
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" :value="frame.code" v-model="checkedFrames" >
-              <label class="form-check-label">{{ frame.name }}</label>
+              <label class="form-check-label font-custom">{{ frame.name }}</label>
             </div>
           </div>
 
@@ -62,22 +62,13 @@
 </template>
 
 <script>
+
 import { ref } from "vue";
 import getReleases from "../composables/getReleases";
 import getRarities from "../composables/getRarities";
 import getFrames from "../composables/getFrames";
 
 export default {
-  /*props: {
-    checkedReleases: {
-      required: true,
-      type: Array
-    }
-  },*//*methods: {
-    event1() {
-      this.$emit("update:checked-releases", 5)
-    }
-  },*/
   name: "SideFilter",
   emits: [
       "update:check-releases",
@@ -141,5 +132,10 @@ export default {
 </script>
 
 <style scoped>
-
+li {
+  padding: 0;
+}
+.font-custom {
+  font-size: 0.8rem;
+}
 </style>
