@@ -1,13 +1,35 @@
 import { ref } from "vue";
 import axios from "axios";
 
-function buildParameters(releases, rarities, frames, query) {
-    let regex;
+function buildParameters(query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) {
+
+    // TODO: improve this logic
+    if (clazz === "All") {
+        clazz = ""
+    }
+    if (type === "All") {
+        type = ""
+    }
 
     const params = {
         ...(releases.length ? {set: releases.map(v => v)+"" } : {}),
-        ...(rarities.length ? {rarity: rarity.map(v => v)+"" } : {}),
-        ...(frames.length ? {frame: frame.map(v => v)+"" } : {})
+        ...(rarities.length ? {rarity: rarities.map(v => v)+"" } : {}),
+        ...(frames.length ? {frame: frames.map(v => v)+"" } : {}),
+        ...(resources ? {resources: resources } : {}),    // todo: update api to resources
+        ...(clazz ? {class: clazz } : {}),
+        ...(type ? {type: type } : {}),
+        ...(cost ? {cost: cost } : {}),
+        ...(power ? {power: power } : {}),
+        ...(defense? {defense: defense } : {}),
+        ...(text? {text: text } : {})
+    }
+
+    let regex;
+
+    if (query.includes("pitch=")) {
+        regex = new RegExp("(pitch=\\s*)(\\d+)", "g")
+        params.resource = regex.exec(query)[2]
+        query = query.replace("pitch=", "").replace(params.resource, "")
     }
 
     if (query.includes("text=")) {
@@ -41,11 +63,7 @@ function buildParameters(releases, rarities, frames, query) {
         params.life = regex.exec(query)[2]
         query = query.replace("life=", "").replace(params.life, "")
     }
-    if (query.includes("pitch=")) {
-        regex = new RegExp("(pitch=\\s*)(\\d+)", "g")
-        params.resource = regex.exec(query)[2]
-        query = query.replace("pitch=", "").replace(params.resource, "")
-    }
+
     if (query.includes("cost=")) {
         regex = new RegExp("(cost=\\s*)(\\d+)", "g")
         params.cost = regex.exec(query)[2]
@@ -77,22 +95,25 @@ const getCardsSearch = () => {
       return loadCards([],[],[],"")
     }
 
-    const loadCards = async (releases, rarities, frames, query) => {
+    const loadCards = async (query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) => {
 
         let params = {}
         let regex = new RegExp("(wtr|arc|cru|mon)(.\\d*)")
 
         query = query.toLowerCase()
 
-        if (regex.test(query)) {
+        /*if (regex.test(query)) {
             params.codes = regex.exec(query)[0]     // get multiple card codes
             axios.get('http://localhost:1010/v0/fab/cards', { params: params })
                 .then(response => cards.value = response.data)
                 .catch(error => console.log(error))
             return;
-        }
+        }*/
 
-        params = buildParameters(releases, rarities, frames, query)
+        params = buildParameters(query, releases, rarities, frames,
+            resources, clazz, type, cost, power, defense, text)
+        console.log(params)
+
         axios.get('http://localhost:1010/v0/fab/cards/search', { params: params })
             .then(response => cards.value = response.data)
             .catch(error => console.log(error))

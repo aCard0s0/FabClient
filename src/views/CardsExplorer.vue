@@ -27,11 +27,11 @@
                   <span class="input-group-text">Resources</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                      {{ resource }}
+                      {{ resources.name || "All" }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                      <li v-for="resource in resources" :key="resource">
-                        <a class="dropdown-item" @click="onSelectResource(resource.name)">{{resource.name}}</a>
+                      <li v-for="resource in resourceOptions" :key="resource">
+                        <a class="dropdown-item" @click="onSelectResource(resource)">{{resource.name}}</a>
                       </li>
                     </ul>
                   </div>
@@ -42,11 +42,11 @@
                   <span class="input-group-text">Class</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton11" data-bs-toggle="dropdown" aria-expanded="false">
-                      {{ clazz }}
+                      {{ clazz.name || "All" }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton11">
-                      <li v-for="clazz in classes" :key="clazz">
-                        <a class="dropdown-item" @click="onSelectClazz(clazz.name)">{{clazz.name}}</a>
+                      <li v-for="clazz in classOptions" :key="clazz">
+                        <a class="dropdown-item" @click="onSelectClazz(clazz)">{{clazz.name}}</a>
                       </li>
                     </ul>
                   </div>
@@ -57,11 +57,11 @@
                   <span class="input-group-text">Card Type</span>
                   <div class="dropdown">
                     <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton10" data-bs-toggle="dropdown" aria-expanded="false">
-                     {{ type }}
+                     {{ type.name || "All" }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-                      <li v-for="type in types" :key="type">
-                        <a class="dropdown-item" @click="onSelectType(type.name)">{{type.name}}</a>
+                      <li v-for="type in typeOptions" :key="type">
+                        <a class="dropdown-item" @click="onSelectType(type)">{{type.name}}</a>
                       </li>
                     </ul>
                   </div>
@@ -80,11 +80,11 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                       <li><a class="dropdown-item">Equals</a></li>
-                      <li><a class="dropdown-item">Greater</a></li>
-                      <li><a class="dropdown-item">Smaller</a></li>
+                      <!--<li><a class="dropdown-item">Greater</a></li>
+                      <li><a class="dropdown-item">Smaller</a></li>-->
                     </ul>
                   </div>
-                  <input type="text" size="3" maxlength="3" class="form-control">
+                  <input type="text" size="3" maxlength="3" class="form-control" v-model="costInput">
                 </div>
               </div>
               <div class="col-lg-auto">
@@ -96,11 +96,11 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
                       <li><a class="dropdown-item">Equals</a></li>
-                      <li><a class="dropdown-item">Greater</a></li>
-                      <li><a class="dropdown-item">Smaller</a></li>
+                      <!--<li><a class="dropdown-item">Greater</a></li>
+                      <li><a class="dropdown-item">Smaller</a></li>-->
                     </ul>
                   </div>
-                  <input type="text" size="3" maxlength="3" class="form-control">
+                  <input type="text" size="3" maxlength="3" class="form-control" v-model="powerInput">
                 </div>
               </div>
               <div class="col-lg-auto">
@@ -112,11 +112,11 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
                       <li><a class="dropdown-item">Equals</a></li>
-                      <li><a class="dropdown-item">Greater</a></li>
-                      <li><a class="dropdown-item">Smaller</a></li>
+                      <!--<li><a class="dropdown-item">Greater</a></li>
+                      <li><a class="dropdown-item">Smaller</a></li>-->
                     </ul>
                   </div>
-                  <input type="text" size="3" maxlength="3" class="form-control">
+                  <input type="text" size="3" maxlength="3" class="form-control" v-model="defenseInput">
                 </div>
               </div>
             </div>
@@ -180,18 +180,15 @@
 </template>
 
 <script>
-import {ref, watch, watchEffect} from "vue";
+import {ref} from "vue";
 import CardTable from "../components/CardTable";
 import CardGrid from "../components/CardGrid";
 
 import getCardsSearch from "../composables/getCardsSearch";
-import getReleases from "../composables/getReleases";
-import getRarities from "../composables/getRarities";
-import getFrames from "../composables/getFrames";
 import SideFilter from "../components/SideFilter";
-import getClasses from "../composables/filters/getClasses";
-import getTypes from "../composables/filters/getTypes";
-import getResources from "../composables/filters/getResources";
+import getClassOptions from "../composables/filters/getClassOptions";
+import getTypeOptions from "../composables/filters/getTypeOptions";
+import getResourceOptions from "../composables/filters/getResourceOptions";
 
 
 export default {
@@ -199,26 +196,30 @@ export default {
   components: {SideFilter, CardTable, CardGrid },
   setup () {
 
-    //region HeroClasses
-    const { classes } = getClasses()
-    const clazz = ref("All")
+    //region MoreFilters
+    const { classOptions } = getClassOptions()
+    const clazz = ref({})
     const onSelectClazz = (selectedClass) => {
       clazz.value = selectedClass
     }
 
-    const { types } = getTypes()
-    const type = ref("All")
+    const { typeOptions } = getTypeOptions()
+    const type = ref({})
     const onSelectType = (selectedType) => {
       type.value = selectedType
     }
 
-    const { resources } = getResources()
-    const resource = ref("All")
+    const { resourceOptions } = getResourceOptions()
+    const resources = ref({})
     const onSelectResource = (selectedResource) => {
-      resource.value = selectedResource
+      resources.value = selectedResource
     }
-    //endregion
 
+    const costInput = ref()
+    const powerInput = ref()
+    const defenseInput = ref()
+
+    //endregion
 
     let displayCards = ref();
     const {cards, loadCards, loadDefaultCards } = getCardsSearch()
@@ -255,13 +256,18 @@ export default {
 
     const query = ref("")
     const handleSearchSubmit = (query) => {
-      loadCards(checkedReleases.value, checkedRarities.value, checkedFrames.value, query)
+      loadCards(
+          query, checkedReleases.value, checkedRarities.value, checkedFrames.value,
+          resources.value.value, clazz.value.name, type.value.name,
+          costInput.value, powerInput.value, defenseInput.value
+      )
     }
 
     return {
-      classes, clazz, onSelectClazz,
-      types, type, onSelectType,
-      resources, resource, onSelectResource,
+      clazz, classOptions, onSelectClazz,
+      type, typeOptions, onSelectType,
+      resources, resourceOptions, onSelectResource,
+      costInput, powerInput, defenseInput,
       displayCards,
       onNumCardToDisplay, nCardToDisplay,
       checkedReleases, updateCheckedReleases,   // releases related
