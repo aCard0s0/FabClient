@@ -1,4 +1,3 @@
-
 const getResourceOptions = () => {
     const resourceOptions = [
         {id: "0", name: "All", value: ""},

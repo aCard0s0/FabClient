@@ -1,4 +1,3 @@
-
 const getTypeOptions = () => {
     const typeOptions = [
         {id: "0", name: "All"},

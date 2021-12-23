@@ -1,25 +1,7 @@
 <template>
 
-  <div class="row">
-    <!-- Pagination -->
-    <nav aria-label="Page navigation example" style="padding-top: 5px;">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a aria-label="Previous" class="page-link" href="#">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li v-for="(n,i) in getPages()" class="page-item">
-          <a class="page-link" @click="cardsToDisplay(i)">{{ i + 1 }}</a>
-        </li>
-        <li class="page-item">
-          <a aria-label="Next" class="page-link" href="#">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <Pagination :nPages="getPages()"
+              @update:show-page="cardsToDisplay"/>
 
   <div class="grid-container justify-content-center">
     <!--<div  v-for="card in cards" :key="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">-->
@@ -49,16 +31,18 @@
 </template>
 
 <script>
-import {computed, reactive, ref, watch, watchEffect} from "vue";
+import {ref} from "vue";
+import Pagination from "../common/Pagination";
 
 export default {
   name: 'CardGrid',
+  components: {Pagination},
   props: ['cards', 'nCardToDisplay'],
   computed: {
     testing() {console.log("testing compute")}
   },
   setup(props) {
-    let display = ref(props.cards.slice(0, props.nCardToDisplay))
+    const display = ref(props.cards.slice(0, props.nCardToDisplay))
 
     const openCardDetails = (card) => {
       console.log("open modal with card details")
@@ -81,9 +65,9 @@ export default {
 
     return {
       openCardDetails, generateImgLinkByCardCode,
-      cardsToDisplay,
       getPages,
-      display
+      display,
+      cardsToDisplay
     }
   }
 }

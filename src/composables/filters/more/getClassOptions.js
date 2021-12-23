@@ -1,4 +1,3 @@
-
 const getClassOptions = () => {
     const classOptions = [
         {id: "0", name: "All"},

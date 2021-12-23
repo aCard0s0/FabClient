@@ -4,49 +4,24 @@ import axios from "axios";
 function buildParameters(query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) {
 
     // TODO: improve this logic
-    if (clazz === "All") {
-        clazz = ""
-    }
-    if (type === "All") {
-        type = ""
-    }
+    clazz = clazz === "All" ? "" : clazz
+    type = type === "All" ? "" : type
 
     const params = {
-        ...(releases.length ? {set: releases.map(v => v)+"" } : {}),
-        ...(rarities.length ? {rarity: rarities.map(v => v)+"" } : {}),
-        ...(frames.length ? {frame: frames.map(v => v)+"" } : {}),
+        ...(releases.length ? {set: releases.map(v => v).toString() } : {}),
+        ...(rarities.length ? {rarity: rarities.map(v => v).toString() } : {}),
+        ...(frames.length ? {frame: frames.map(v => v).toString() } : {}),
         ...(resources ? {resources: resources } : {}),    // todo: update api to resources
         ...(clazz ? {class: clazz } : {}),
         ...(type ? {type: type } : {}),
         ...(cost ? {cost: cost } : {}),
         ...(power ? {power: power } : {}),
-        ...(defense? {defense: defense } : {}),
-        ...(text? {text: text } : {})
+        ...(defense ? {defense: defense } : {}),
+        ...(text ? {text: text } : {})
     }
 
     let regex;
 
-    if (query.includes("pitch=")) {
-        regex = new RegExp("(pitch=\\s*)(\\d+)", "g")
-        params.resource = regex.exec(query)[2]
-        query = query.replace("pitch=", "").replace(params.resource, "")
-    }
-
-    if (query.includes("text=")) {
-        regex = new RegExp("(text=\\s*)\"(.*?)\"", "g")
-        params.text = regex.exec(query)[2]
-        query = query.replace("text=", "").replace(params.text, "")
-    }
-    if (query.includes("type=")) {
-        regex = new RegExp("(type=\\s*)\"(.*?)\"", "g")
-        params.type = regex.exec(query)[2]
-        query = query.replace("type=", "").replace(params.type, "")
-    }
-    if (query.includes("class=")) {
-        regex = new RegExp("(class=\\s*)\"(.*?)\"", "g")
-        params.text = regex.exec(query)[2]
-        query = query.replace("class=", "").replace(params.class, "")
-    }
     if (query.includes("talent=")) {
         regex = new RegExp("(talent=\\s*)\"(.*?)\"", "g")
         params.talent = regex.exec(query)[2]
@@ -64,25 +39,9 @@ function buildParameters(query, releases, rarities, frames, resources, clazz, ty
         query = query.replace("life=", "").replace(params.life, "")
     }
 
-    if (query.includes("cost=")) {
-        regex = new RegExp("(cost=\\s*)(\\d+)", "g")
-        params.cost = regex.exec(query)[2]
-        query = query.replace("cost=", "").replace(params.cost, "")
-    }
-    if (query.includes("power=")) {
-        regex = new RegExp("(power=\\s*)(\\d+)", "g")
-        params.power = regex.exec(query)[2]
-        query = query.replace("power=", "").replace(params.power, "")
-    }
-    if (query.includes("defense=")) {
-        regex = new RegExp("(defense=\\s*)(\\d+)", "g")
-        params.defense = regex.exec(query)[2]
-        query = query.replace("defense=", "").replace(params.defense, "")
-    }
-
-    if (query.trim().length) {
+    /*if (query.trim().length) {
         params.name = query.trim()
-    }
+    }*/
 
     return params
 }
@@ -92,7 +51,8 @@ const getCardsSearch = () => {
     const error = ref(null)
 
     const loadDefaultCards = () => {
-      return loadCards([],[],[],"")
+      return loadCards("",[],[],"")
+          .then(response => response)
     }
 
     const loadCards = async (query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) => {
@@ -100,7 +60,7 @@ const getCardsSearch = () => {
         let params = {}
         let regex = new RegExp("(wtr|arc|cru|mon)(.\\d*)")
 
-        query = query.toLowerCase()
+        // query = query.toLowerCase()
 
         /*if (regex.test(query)) {
             params.codes = regex.exec(query)[0]     // get multiple card codes
@@ -117,8 +77,6 @@ const getCardsSearch = () => {
         axios.get('http://localhost:1010/v0/fab/cards/search', { params: params })
             .then(response => cards.value = response.data)
             .catch(error => console.log(error))
-
-        return cards;
     }
 
     return {cards, loadCards, loadDefaultCards}
