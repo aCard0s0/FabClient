@@ -21,6 +21,7 @@
             @update:selected-resources="updateSelectedResources"
             @update:selected-class="updateSelectedClass"
             @update:selected-type="updateSelectedType"
+            @update:selected-talent="updateSelectedTalent"
             :cost = costInput
             @update:input-cost="updateInputCost"
             :power = powerInput
@@ -80,8 +81,10 @@
           </div>
 
           <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
-            <h1>Table</h1>
-            <CardTable :cards="cards"/>
+            <CardTable
+                :key="{cards, nCardToDisplay}"
+                :cards="cards"
+                :nCardToDisplay="nCardToDisplay" />
           </div>
         </div>
       </div>
@@ -107,6 +110,7 @@ export default {
     const resources = ref({})
     const clazz = ref({})
     const type = ref({})
+    const talent = ref({})
     const costInput = ref()
     const powerInput = ref()
     const defenseInput = ref()
@@ -135,6 +139,9 @@ export default {
 
     const updateSelectedType = (newValue) => {
       type.value = newValue
+    }
+    const updateSelectedTalent = (newValue) => {
+      talent.value = newValue
     }
 
     const updateInputCost = (newValue) => {
@@ -171,7 +178,7 @@ export default {
     const handleSearchSubmit = (query) => {
       loadCards(
           query, checkedReleases.value, checkedRarities.value, checkedFrames.value,
-          resources.value.value, clazz.value.name, type.value.name,
+          resources.value.value, clazz.value.name, type.value.name, talent.value.name,
           costInput.value, powerInput.value, defenseInput.value, textInput.value
       )
     }
@@ -184,6 +191,7 @@ export default {
       resources,  updateSelectedResources,
       clazz, updateSelectedType,
       type, updateSelectedClass,
+      talent, updateSelectedTalent,
       costInput, updateInputCost,
       powerInput, updateInputPower,
       defenseInput, updateInputDefense,

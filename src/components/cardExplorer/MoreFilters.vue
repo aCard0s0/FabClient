@@ -51,6 +51,21 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-auto">
+          <div class="input-group mb-3">
+            <span class="input-group-text">Talent</span>
+            <div class="dropdown">
+              <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton12" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ talent.name || "None" }}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton12">
+                <li v-for="talent in talentOptions" :key="talent">
+                  <a class="dropdown-item" @click="onSelectTalent(talent)">{{talent.name}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Cost & Power & Defense-->
@@ -121,6 +136,7 @@ import {computed, ref} from "vue";
 import getClassOptions from "../../composables/filters/more/getClassOptions";
 import getTypeOptions from "../../composables/filters/more/getTypeOptions";
 import getResourceOptions from "../../composables/filters/more/getResourceOptions";
+import getTalentOptions from "../../composables/filters/more/getTalentOptions";
 
 export default {
   name: "MoreFilters",
@@ -134,6 +150,7 @@ export default {
     "update:selected-resources",
     "update:selected-class",
     "update:selected-type",
+    "update:selected-talent",
     "update:input-cost",
     "update:input-power",
     "update:input-defense",
@@ -143,10 +160,12 @@ export default {
     const { classOptions } = getClassOptions()
     const { typeOptions } = getTypeOptions()
     const { resourceOptions } = getResourceOptions()
+    const { talentOptions } = getTalentOptions()
 
     const resources = ref({})
     const clazz = ref({})
     const type = ref({})
+    const talent = ref({})
 
     const onSelectResource = (newValue) => {
       resources.value = newValue
@@ -161,6 +180,11 @@ export default {
     const onSelectType = (newValue) => {
       type.value = newValue
       context.emit("update:selected-type", type.value)
+    }
+
+    const onSelectTalent = (newValue) => {
+      talent.value = newValue
+      context.emit("update:selected-talent", talent.value)
     }
 
     const cost = computed({
@@ -187,6 +211,7 @@ export default {
       resources, resourceOptions, onSelectResource,
       clazz, classOptions, onSelectClazz,
       type, typeOptions, onSelectType,
+      talent, talentOptions, onSelectTalent,
       cost,
       power,
       defense,
@@ -202,7 +227,7 @@ export default {
 }
 span {
   font-size: 0.9rem;
-  padding: 0rem 0.5rem 0rem 0.5rem;
+  padding: 0 0.5rem 0 0.5rem;
 }
 button {
   font-size: 0.9rem;

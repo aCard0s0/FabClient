@@ -35,9 +35,9 @@ import {ref} from "vue";
 import Pagination from "../common/Pagination";
 
 export default {
-  name: 'CardGrid',
+  name: "CardGrid",
   components: {Pagination},
-  props: ['cards', 'nCardToDisplay'],
+  props: ["cards", "nCardToDisplay"],
   computed: {
     testing() {console.log("testing compute")}
   },
@@ -64,10 +64,11 @@ export default {
     }
 
     return {
-      openCardDetails, generateImgLinkByCardCode,
-      getPages,
       display,
-      cardsToDisplay
+      cardsToDisplay,
+      getPages,
+      openCardDetails,
+      generateImgLinkByCardCode,
     }
   }
 }

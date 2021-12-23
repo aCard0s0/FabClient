@@ -1,12 +1,12 @@
 import { ref } from "vue";
 import axios from "axios";
 
-function buildParameters(query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) {
+function buildParameters(query, releases, rarities, frames, resources, clazz, type, talent, cost, power, defense, text) {
 
     // TODO: improve this logic
     clazz = clazz === "All" ? "" : clazz
     type = type === "All" ? "" : type
-
+    console.log(talent)
     const params = {
         ...(releases.length ? {set: releases.map(v => v).toString() } : {}),
         ...(rarities.length ? {rarity: rarities.map(v => v).toString() } : {}),
@@ -14,6 +14,7 @@ function buildParameters(query, releases, rarities, frames, resources, clazz, ty
         ...(resources ? {resources: resources } : {}),    // todo: update api to resources
         ...(clazz ? {class: clazz } : {}),
         ...(type ? {type: type } : {}),
+        ...(talent ? {talent: talent } : {}),
         ...(cost ? {cost: cost } : {}),
         ...(power ? {power: power } : {}),
         ...(defense ? {defense: defense } : {}),
@@ -55,7 +56,7 @@ const getCardsSearch = () => {
           .then(response => response)
     }
 
-    const loadCards = async (query, releases, rarities, frames, resources, clazz, type, cost, power, defense, text) => {
+    const loadCards = async (query, releases, rarities, frames, resources, clazz, type, talent, cost, power, defense, text) => {
 
         let params = {}
         let regex = new RegExp("(wtr|arc|cru|mon)(.\\d*)")
@@ -71,7 +72,7 @@ const getCardsSearch = () => {
         }*/
 
         params = buildParameters(query, releases, rarities, frames,
-            resources, clazz, type, cost, power, defense, text)
+            resources, clazz, type, talent, cost, power, defense, text)
         console.log(params)
 
         axios.get('http://localhost:1010/v0/fab/cards/search', { params: params })
