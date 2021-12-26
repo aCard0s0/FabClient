@@ -8,10 +8,11 @@
     <tr>
       <th scope="col" >Image</th>
       <th scope="col" style="width: 1rem">#</th>
-      <th scope="col" style="width: 1rem"></th>
       <th scope="col" style="width: 1rem">Rarity</th>
+      <th scope="col" style="width: 1rem"></th>
       <th scope="col" >Name</th>
       <th scope="col">Type</th>
+      <th scope="col">Stats</th>
       <th scope="col"></th>
       <!--<th scope="col">Resources</th>
       <th scope="col">Cost</th>
@@ -25,29 +26,58 @@
       <td style="text-align: center; padding: 0rem">
         <img class="img-crop" v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
       </td>
-      <td style="text-align: center">{{card.cardCode}}</td>
-
-      <td>
-        <div v-if="card.stats.resource === 1">
+      <td style="text-align: center">
+        <!--{{card.cardCode.substring(0,3) +" "+ card.cardCode.substring(3,6)}}-->
+        {{card.cardCode}}
+      </td>
+      <td style="text-align: center">{{card.rarity}}</td>
+      <td style="text-align: right">
+        <div v-if="isRed(card)">
           <svg height="15" width="16">
             <circle cx="8" cy="6" r="6" fill="red" />
           </svg>
         </div>
-        <div v-if="card.stats.resource === 2">
+        <div v-if="isYellow(card)">
           <svg height="15" width="16">
             <circle cx="8" cy="6" r="6" fill="yellow" />
           </svg>
         </div>
-        <div v-if="card.stats.resource === 3">
+        <div v-if="isBlue(card)">
           <svg height="15" width="16">
             <circle cx="8" cy="6" r="6" fill="deepskyblue" />
           </svg>
         </div>
       </td>
-
-      <td style="text-align: center">{{card.rarity}}</td>
       <td>{{card.name}}</td>
       <td>{{card.type}}</td>
+      <!-- Stats -->
+      <td>
+        <div class="row">
+          <div v-if="hasResources(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="" />
+          </div>
+          <div v-if="hasPower(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="" /> {{card.stats.power}}
+          </div>
+          <div v-if="hasIntellect(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/intellect.png" alt="" /> {{card.stats.intellect}}
+          </div>
+          <div v-if="hasLife(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/life.png" alt="" /> {{card.stats.life}}
+          </div>
+        </div>
+        <div class="row">
+          <div v-if="hasCost(card)" class="col-6">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="" /> {{card.stats.cost}}
+          </div>
+
+          <div v-if="hasDefense(card)" class="col-6">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="" /> {{card.stats.defense}}
+          </div>
+        </div>
+
+
+      </td> <!-- TODO: Image for stats-->
       <td>
         <button class="btn btn-outline-primary disabled" >+</button>
       </td>
@@ -85,11 +115,59 @@ export default {
       display.value = props.cards.slice(props.nCardToDisplay*page, props.nCardToDisplay*(page+1))
     }
 
+    const isRed = (card) => {
+      return card.stats.resource === "1";
+    }
+    const isYellow = (card) => {
+      return card.stats.resource === "2";
+    }
+    const isBlue = (card) => {
+      return card.stats.resource === "3";
+    }
+
+    const hasIntellect = (card) => {
+      return card.stats.intellect !== "";
+    }
+    const hasLife = (card) => {
+      return card.stats.life !== "";
+    }
+    const hasPower = (card) => {
+      return card.stats.power !== "";
+    }
+    const hasDefense = (card) => {
+      return card.stats.defense !== "";
+    }
+    const hasCost = (card) => {
+      return card.stats.cost !== "";
+    }
+    const hasResources = (card) => {
+      return card.stats.resource !== "";
+    }
+    const getResourceImage = (card) => {
+      if (card.stats.resource === "1") {
+        return require(`@/assets/imgs/icons/pitch-1.png`)
+      }
+      if (card.stats.resource === "2") {
+        return require(`@/assets/imgs/icons/pitch-2.png`)
+      }
+      if (card.stats.resource === "3") {
+        return require(`@/assets/imgs/icons/pitch-3.png`)
+      }
+    }
+
     return {
       display,
       cardsToDisplay,
       getPages,
       generateImgLinkByCardCode,
+      isRed, isYellow, isBlue,
+      hasIntellect,
+      hasLife,
+      hasPower,
+      hasDefense,
+      hasCost,
+      hasResources,
+      getResourceImage
     }
   }
 }
@@ -104,5 +182,10 @@ export default {
   width: 8rem;
   margin-bottom: 0px;
 }
-
+.stats-icon-padding {
+  padding: 0 0.3rem 0 0;
+}
+.stats-icon-size {
+  width: 1.5rem;
+}
 </style>
