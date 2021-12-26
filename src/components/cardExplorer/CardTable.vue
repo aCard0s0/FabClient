@@ -67,11 +67,11 @@
           </div>
         </div>
         <div class="row">
-          <div v-if="hasCost(card)" class="col-6">
+          <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
             <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="" /> {{card.stats.cost}}
           </div>
 
-          <div v-if="hasDefense(card)" class="col-6">
+          <div v-if="hasDefense(card)" class="col-6 stats-icon-padding">
             <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="" /> {{card.stats.defense}}
           </div>
         </div>
@@ -183,7 +183,7 @@ export default {
   margin-bottom: 0px;
 }
 .stats-icon-padding {
-  padding: 0 0.3rem 0 0;
+  padding: 0 0.5rem 0 0;
 }
 .stats-icon-size {
   width: 1.5rem;
