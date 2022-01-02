@@ -1,16 +1,16 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/cardsExplorer">Cards Explorer</router-link> |
-    <router-link to="/deckBuilder">Deck Builder</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+
+  <NavBar />
+  <br/>
 
   <div class="container">
     <div class="container-fluid">
       <router-view/>
     </div>
   </div>
+
+  <br />
+  <Footer />
 
 </template>
 
@@ -23,16 +23,12 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
+<script>
+import NavBar from "./views/NavBar";
+import Footer from "./views/Footer";
+export default {
+  components: {Footer, NavBar}
+}
+</script>

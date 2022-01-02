@@ -1,5 +1,10 @@
 <template>
   <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">More filters</a>
+  &nbsp;
+  <a v-if="showWarningSign()" role="button" @click="cleanupFilters()">
+    <font-awesome-icon  icon="exclamation-circle" style="color: gold"/>
+    Cleanup filters
+  </a>
 
   <div class="collapse " id="collapseExample" >
     <div class="card card-body less-padding">
@@ -19,6 +24,11 @@
                 </li>
               </ul>
             </div>
+            <!--<select class="btn nav-link dropdown-toggle" v-model="resources">
+              <option class="dropdown-item" v-for="resource in resourceOptions" :value="resource.value">
+                {{ resource.name }}
+              </option>
+            </select>-->
           </div>
         </div>
         <div class="col-lg-auto">
@@ -141,6 +151,10 @@ import getTalentOptions from "../../composables/filters/more/getTalentOptions";
 export default {
   name: "MoreFilters",
   props: {
+    'resources': ref({}),
+    'clazz': ref({}),
+    'type': ref({}),
+    'talent': ref({}),
     'cost': String,
     'power': String,
     'defense': String,
@@ -162,60 +176,82 @@ export default {
     const { resourceOptions } = getResourceOptions()
     const { talentOptions } = getTalentOptions()
 
-    const resources = ref({})
-    const clazz = ref({})
-    const type = ref({})
-    const talent = ref({})
+    /*  TODO: change implementation to select tag and v-model?
+    const resources = computed({
+      get: () => props.resources,
+      set: (newValue) => context.emit("update:selected-resources", newValue)
+    })*/
 
     const onSelectResource = (newValue) => {
-      resources.value = newValue
-      context.emit("update:selected-resources", resources.value)
+      context.emit("update:selected-resources", newValue)
     }
 
     const onSelectClazz = (newValue) => {
-      clazz.value = newValue
-      context.emit("update:selected-class", clazz.value)
+      context.emit("update:selected-class", newValue)
     }
 
     const onSelectType = (newValue) => {
-      type.value = newValue
-      context.emit("update:selected-type", type.value)
+      context.emit("update:selected-type", newValue)
     }
 
     const onSelectTalent = (newValue) => {
-      talent.value = newValue
-      context.emit("update:selected-talent", talent.value)
+      context.emit("update:selected-talent", newValue)
     }
 
-    const cost = computed({
+    let cost = computed({
       get: () => props.cost,
-      set: (value) => context.emit("update:input-cost", value)
+      set: (newValue) => context.emit("update:input-cost", newValue)
     })
 
-    const power = computed({
+    let power = computed({
       get: () => props.power,
-      set: (value) => context.emit("update:input-power", value)
+      set: (newValue) => context.emit("update:input-power", newValue)
     })
 
-    const defense = computed({
+    let defense = computed({
       get: () => props.defense,
-      set: (value) => context.emit("update:input-defense", value)
+      set: (newValue) => context.emit("update:input-defense", newValue)
     })
 
-    const text = computed({
+    let text = computed({
       get: () => props.text,
-      set: (value) => context.emit("update:input-text", value)
+      set: (newValue) => context.emit("update:input-text", newValue)
     })
+
+    const showWarningSign = () => {
+      return props.resources.value ||
+          props.clazz.value ||
+          props.type.value ||
+          props.talent.value ||
+          props.cost ||
+          props.power ||
+          props.defense ||
+          props.text
+
+    }
+
+    const cleanupFilters = () => {
+      onSelectResource("")
+      onSelectClazz("")
+      onSelectTalent("")
+      onSelectType("")
+      cost.value = ""
+      power.value = ""
+      defense.value = ""
+      text.value = ""
+    }
 
     return {
-      resources, resourceOptions, onSelectResource,
-      clazz, classOptions, onSelectClazz,
-      type, typeOptions, onSelectType,
-      talent, talentOptions, onSelectTalent,
+      resourceOptions, onSelectResource,
+      classOptions, onSelectClazz,
+      typeOptions, onSelectType,
+      talentOptions, onSelectTalent,
       cost,
       power,
       defense,
-      text
+      text,
+      showWarningSign,
+      cleanupFilters
     }
   }
 }

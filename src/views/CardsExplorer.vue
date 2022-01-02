@@ -18,9 +18,13 @@
     <div class="row justify-content-md-center">
       <div class="col-10">
         <MoreFilters
+            :resources = resources
             @update:selected-resources="updateSelectedResources"
+            :clazz = clazz
             @update:selected-class="updateSelectedClass"
+            :type = type
             @update:selected-type="updateSelectedType"
+            :talent = talent
             @update:selected-talent="updateSelectedTalent"
             :cost = costInput
             @update:input-cost="updateInputCost"
@@ -107,10 +111,10 @@ export default {
     const nCardToDisplay = ref(24)
     const query = ref("")
     // more filters
-    const resources = ref({})
-    const clazz = ref({})
-    const type = ref({})
-    const talent = ref({})
+    const resources = ref("")
+    const clazz = ref("")
+    const type = ref("")
+    const talent = ref("")
     const costInput = ref()
     const powerInput = ref()
     const defenseInput = ref()
@@ -178,7 +182,7 @@ export default {
     const handleSearchSubmit = (query) => {
       loadCards(
           query, checkedReleases.value, checkedRarities.value, checkedFrames.value,
-          resources.value.value, clazz.value.name, type.value.name, talent.value.name,
+          resources.value.value, clazz.value.value, type.value.value, talent.value.value,
           costInput.value, powerInput.value, defenseInput.value, textInput.value
       )
     }
@@ -189,8 +193,8 @@ export default {
       query, handleSearchSubmit,
       // more filters
       resources,  updateSelectedResources,
-      clazz, updateSelectedType,
-      type, updateSelectedClass,
+      clazz, updateSelectedClass,
+      type, updateSelectedType,
       talent, updateSelectedTalent,
       costInput, updateInputCost,
       powerInput, updateInputPower,
