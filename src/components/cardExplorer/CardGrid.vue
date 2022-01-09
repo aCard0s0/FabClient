@@ -1,7 +1,9 @@
 <template>
 
-  <Pagination :nPages="getPages()"
-              @update:show-page="cardsToDisplay"/>
+  <Pagination
+      :key="cardsToDisplay"
+      :nPages="getPages()"
+      @update:show-page="cardsToDisplay"/>
 
   <div class="grid-container justify-content-center">
     <!--<div  v-for="card in cards" :key="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">-->

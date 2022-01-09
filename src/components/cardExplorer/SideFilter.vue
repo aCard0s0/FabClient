@@ -49,7 +49,7 @@
 
           <div v-for="frame in frames" :key="frame">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" :value="frame.code" v-model="checkedFrames" >
+              <input class="form-check-input" type="checkbox" :value="frame.code" v-model="checkedFrames" @change="updateCheckedFrames()">
               <label class="form-check-label custom-font">{{ frame.name }}</label>
             </div>
           </div>

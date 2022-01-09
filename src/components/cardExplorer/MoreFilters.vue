@@ -1,10 +1,12 @@
 <template>
-  <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">More filters</a>
-  &nbsp;
-  <a v-if="showWarningSign()" role="button" @click="cleanupFilters()">
-    <font-awesome-icon  icon="exclamation-circle" style="color: gold"/>
-    Cleanup filters
-  </a>
+  <div class="row">
+    <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">More filters</a>
+    <div v-if="showWarningSign()">
+      <font-awesome-icon  icon="exclamation-circle" style="color: gold"/>
+      <a href="#" @click="cleanupFilters()">Cleanup filter</a>
+    </div>
+
+  </div>
 
   <div class="collapse " id="collapseExample" >
     <div class="card card-body less-padding">

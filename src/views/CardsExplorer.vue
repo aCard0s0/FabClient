@@ -3,7 +3,7 @@
     <div class="row justify-content-md-center">
       <div class="col-md-7">
         <div class="input-group">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="Search by name or code"
+          <input type="text" class="form-control bg-light border-0 small" placeholder="Search by card code, name or text"
                  aria-label="Search" aria-describedby="basic-addon2" v-model="query" @keyup.enter="handleSearchSubmit(query)">
           <div class="input-group-append">
             <button class="btn btn-primary" type="button" @click="handleSearchSubmit(query)" >

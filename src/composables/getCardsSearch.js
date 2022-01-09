@@ -8,10 +8,11 @@ function buildParameters(query, releases, rarities, frames, resources, clazz, ty
     type = type === "All" ? "" : type
 
     const params = {
+        ...(query.length ? {query: query} : {}),
         ...(releases.length ? {set: releases.map(v => v).toString() } : {}),
         ...(rarities.length ? {rarity: rarities.map(v => v).toString() } : {}),
         ...(frames.length ? {frame: frames.map(v => v).toString() } : {}),
-        ...(resources ? {resources: resources } : {}),    // todo: update api to resources
+        ...(resources ? {resource: resources } : {}),    // todo: update api to resources
         ...(clazz ? {class: clazz } : {}),
         ...(type ? {type: type } : {}),
         ...(talent ? {talent: talent } : {}),
@@ -21,24 +22,6 @@ function buildParameters(query, releases, rarities, frames, resources, clazz, ty
         ...(text ? {text: text } : {})
     }
 
-    let regex;
-
-    if (query.includes("talent=")) {
-        regex = new RegExp("(talent=\\s*)\"(.*?)\"", "g")
-        params.talent = regex.exec(query)[2]
-        query = query.replace("talent=", "").replace(params.talent, "")
-    }
-
-    if (query.includes("intellect=")) {
-        regex = new RegExp("(intellect=\\s*)(\\d+)", "g")
-        params.intellect = regex.exec(query)[2]
-        query = query.replace("intellect=", "").replace(params.intellect, "")
-    }
-    if (query.includes("life=")) {
-        regex = new RegExp("(life=\\s*)(\\d+)", "g")
-        params.life = regex.exec(query)[2]
-        query = query.replace("life=", "").replace(params.life, "")
-    }
 
     /*if (query.trim().length) {
         params.name = query.trim()

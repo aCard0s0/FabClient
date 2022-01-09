@@ -22,9 +22,11 @@
     </thead>
     <tbody>
 
-    <tr v-for="card in display">
+    <tr class="table-row-hover" v-for="card in display">
       <td style="text-align: center; padding: 0rem">
-        <img class="img-crop" v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
+        <div class="crop-container">
+          <img v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
+        </div>
       </td>
       <td style="text-align: center">
         <!--{{card.cardCode.substring(0,3) +" "+ card.cardCode.substring(3,6)}}-->
@@ -54,10 +56,10 @@
       <td>
         <div class="row">
           <div v-if="hasResources(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="" />
+            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="" /> {{card.stats.resource}}
           </div>
-          <div v-if="hasPower(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="" /> {{card.stats.power}}
+          <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="" /> {{card.stats.cost}}
           </div>
           <div v-if="hasIntellect(card)" class="col-6 stats-icon-padding">
             <img class="stats-icon-size" src="@/assets/imgs/icons/intellect.png" alt="" /> {{card.stats.intellect}}
@@ -67,8 +69,8 @@
           </div>
         </div>
         <div class="row">
-          <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="" /> {{card.stats.cost}}
+          <div v-if="hasPower(card)" class="col-6 stats-icon-padding">
+            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="" /> {{card.stats.power}}
           </div>
 
           <div v-if="hasDefense(card)" class="col-6 stats-icon-padding">
@@ -174,12 +176,15 @@ export default {
 </script>
 
 <style scoped>
-.img-crop{
+.crop-container {
   width: 8rem;
-  margin-bottom: -80%;
+  overflow: hidden;
 }
-.img-crop:hover{
+.crop-container img {
   width: 8rem;
+  margin-bottom: -85%;
+}
+.crop-container img:hover {
   margin-bottom: 0px;
 }
 .stats-icon-padding {
