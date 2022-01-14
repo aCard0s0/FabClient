@@ -31,9 +31,7 @@
             :power = powerInput
             @update:input-power="updateInputPower"
             :defense = defenseInput
-            @update:input-defense="updateInputDefense"
-            :text = textInput
-            @update:input-text="updateInputText"/>
+            @update:input-defense="updateInputDefense"/>
       </div>
     </div>
 
@@ -41,7 +39,7 @@
       <!-- SideFilter -->
       <div class="col-lg-2" style="padding-top: 40px">
         <SideFilter
-            @update:check-releases="updateCheckedReleases"
+            @update:check-sets="updateCheckedSets"
             @update:check-rarities="updateCheckedRarities"
             @update:check-frames="updateCheckedFrames"/>
       </div>
@@ -50,8 +48,8 @@
       <div class="col-lg-10">
         <nav>
           <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true">Grid</button>
-            <button class="nav-link" id="nav-table-tab" data-bs-toggle="tab" data-bs-target="#nav-table" type="button" role="tab" aria-controls="nav-table" aria-selected="false">Table</button>
+            <button class="nav-link active" id="nav-table-tab" data-bs-toggle="tab" data-bs-target="#nav-table" type="button" role="tab" aria-controls="nav-table" aria-selected="false">Table</button>
+            <button class="nav-link" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true">Grid</button>
             <div class="dropdown">
               <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Size: {{nCardToDisplay}}
@@ -77,15 +75,14 @@
         </nav>
 
         <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
-            <CardGrid
+          <div class="tab-pane fade show active" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
+            <CardTable
                 :key="{cards, nCardToDisplay}"
                 :cards="cards"
                 :nCardToDisplay="nCardToDisplay" />
           </div>
-
-          <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab">
-            <CardTable
+          <div class="tab-pane fade" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
+            <CardGrid
                 :key="{cards, nCardToDisplay}"
                 :cards="cards"
                 :nCardToDisplay="nCardToDisplay" />
@@ -120,7 +117,7 @@ export default {
     const defenseInput = ref()
     const textInput = ref("")
     // side filters
-    const checkedReleases = ref([])
+    const checkedSets = ref([])
     const checkedRarities = ref([])
     const checkedFrames = ref([])
     // API calls
@@ -166,8 +163,8 @@ export default {
     //endregion
 
     //region Sidebar
-    const updateCheckedReleases = (releases) => {
-      checkedReleases.value = releases
+    const updateCheckedSets = (sets) => {
+      checkedSets.value = sets
     }
 
     const updateCheckedRarities = (rarities) => {
@@ -181,7 +178,7 @@ export default {
 
     const handleSearchSubmit = (query) => {
       loadCards(
-          query, checkedReleases.value, checkedRarities.value, checkedFrames.value,
+          query, checkedSets.value, checkedRarities.value, checkedFrames.value,
           resources.value.value, clazz.value.value, type.value.value, talent.value.value,
           costInput.value, powerInput.value, defenseInput.value, textInput.value
       )
@@ -201,7 +198,7 @@ export default {
       defenseInput, updateInputDefense,
       textInput, updateInputText,
       // side filters
-      checkedReleases, updateCheckedReleases,
+      checkedSets, updateCheckedSets,
       checkedRarities, updateCheckedRarities,
       checkedFrames, updateCheckedFrames
     }

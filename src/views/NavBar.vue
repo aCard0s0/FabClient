@@ -5,9 +5,9 @@
     <!-- Container wrapper -->
     <div class="container">
       <!-- Navbar brand -->
-      <a class="navbar-brand me-2">
+      <router-link to="/" class="navbar-brand me-2">
         <img src="@/assets/logo-placeholder.png" style="width: 7rem"/>
-      </a>
+      </router-link>
 
       <!-- Toggle button -->
       <button
@@ -27,13 +27,16 @@
         <!-- Left links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/cardsExplorer">Cards Explorer</router-link>
+            <router-link to="/">Rathe Hub</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/deckBuilder">Deck Builder</router-link>
+            <router-link to="/card-search">Card Searcher</router-link>
           </li>
+          <!--<li class="nav-item">
+            <router-link to="/deck-builder">Deck Builder</router-link>
+          </li>-->
           <li class="nav-item">
-            <router-link to="/about">About</router-link>
+            <router-link to="/feedback">Feedback</router-link>
           </li>
         </ul>
 

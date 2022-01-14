@@ -11,10 +11,21 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+    faSearch, faExclamationCircle,
+    faEnvelope,
+    faSnowflake, faStar, faSyncAlt,
+    faFilter, faEraser
+} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch)
 library.add(faExclamationCircle)
+library.add(faEnvelope)
+library.add(faSnowflake)
+library.add(faStar)
+library.add(faSyncAlt)
+library.add(faFilter)
+library.add(faEraser)
 
 createApp(App)
     .use(router)

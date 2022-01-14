@@ -1,11 +1,27 @@
 <template>
-  <div class="row">
-    <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">More filters</a>
-    <div v-if="showWarningSign()">
-      <font-awesome-icon  icon="exclamation-circle" style="color: gold"/>
-      <a href="#" @click="cleanupFilters()">Cleanup filter</a>
+  <div class="row justify-content-md-center">
+    <div class="col-12">
+      <!--<div class="btn-group">
+        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">More filters</a>
+        &nbsp;&nbsp;
+        <div v-if="showWarningSign()" style="position: relative">
+          <font-awesome-icon icon="exclamation-circle" style="color: gold"/>
+          <a href="#" @click="cleanupFilters()">Cleanup filter</a>
+        </div>
+      </div>-->
+      <div class="btn-group">
+        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <font-awesome-icon icon="filter" style="color: #0090ff"/>
+          Filters
+        </button>
+        <div v-if="showWarningSign()">
+          <button class="btn btn-outline-primary btn-sm" @click="cleanupFilters()">
+            <font-awesome-icon icon="eraser" style="color: gold"/>
+            Cleanup Filter
+          </button>
+        </div>
+      </div>
     </div>
-
   </div>
 
   <div class="collapse " id="collapseExample" >
@@ -132,8 +148,6 @@
         </div>
       </div>
 
-      <!-- Text -->
-      <textarea class="form-control" rows="1" placeholder="Search by text" v-model="text"></textarea>
       <!--<div class="row justify-content-md-center">
         <div class="col-lg-6">
           <button class="btn btn-primary" type="button" @click="handleSearchSubmit(query)" >Filter</button>
@@ -160,7 +174,6 @@ export default {
     'cost': String,
     'power': String,
     'defense': String,
-    'text': String,
   },
   emits: [
     "update:selected-resources",
@@ -170,7 +183,6 @@ export default {
     "update:input-cost",
     "update:input-power",
     "update:input-defense",
-    "update:input-text"
   ],
   setup(props, context) {
     const { classOptions } = getClassOptions()
@@ -215,11 +227,6 @@ export default {
       set: (newValue) => context.emit("update:input-defense", newValue)
     })
 
-    let text = computed({
-      get: () => props.text,
-      set: (newValue) => context.emit("update:input-text", newValue)
-    })
-
     const showWarningSign = () => {
       return props.resources.value ||
           props.clazz.value ||
@@ -227,8 +234,7 @@ export default {
           props.talent.value ||
           props.cost ||
           props.power ||
-          props.defense ||
-          props.text
+          props.defense
 
     }
 
@@ -240,7 +246,6 @@ export default {
       cost.value = ""
       power.value = ""
       defense.value = ""
-      text.value = ""
     }
 
     return {
@@ -251,7 +256,6 @@ export default {
       cost,
       power,
       defense,
-      text,
       showWarningSign,
       cleanupFilters
     }

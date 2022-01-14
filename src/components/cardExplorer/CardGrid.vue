@@ -11,20 +11,22 @@
       <div v-if="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
         <div class="card" style="width: 10rem;" @click="openCardDetails(card)">
           {{ card.cardCode }}
+
           <img alt="..." class="card-img-top" v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
-          <div class="justify-content-center" style="display: flex; font-size:12px;">
+
+          <!--<div class="justify-content-center" style="display: flex; font-size:12px;">
             <div v-for="frame in card.frames" :key="frame">
-              <div v-if="frame === 'Rainbow'">
-                RF &nbsp;
+              <div v-if="frame === 'Cold Foil'">
+                <font-awesome-icon icon="snowflake" style="color: #0090ff" title="Cold Foil"/> &nbsp;
               </div>
-              <div v-else-if="frame === 'Cold Foil'">
-                CF &nbsp;
+              <div v-else-if="frame === 'Rainbow'">
+                <font-awesome-icon icon="star" style="color: gold" title="Rainbow Foil"/> &nbsp;
               </div>
               <div v-else-if="frame === 'Double Slided'">
-                DS &nbsp;
+                <font-awesome-icon icon="sync-alt" style="color: #a6a4a4" title="Double Slided"/> &nbsp;
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

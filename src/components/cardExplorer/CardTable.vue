@@ -12,9 +12,9 @@
       <th scope="col" style="width: 1rem"></th>
       <th scope="col" >Name</th>
       <th scope="col">Type</th>
-      <th scope="col">Stats</th>
-      <th scope="col"></th>
-      <!--<th scope="col">Resources</th>
+      <th scope="col" style="width: 7rem">Stats</th>
+      <!--<th scope="col"></th>
+      <th scope="col">Resources</th>
       <th scope="col">Cost</th>
       <th scope="col">Power</th>
       <th scope="col">Defense</th>-->
@@ -22,7 +22,7 @@
     </thead>
     <tbody>
 
-    <tr class="table-row-hover" v-for="card in display">
+    <tr class="table-row-hover" v-for="card in display" @click="goToCardDetails(card.cardCode)">
       <td style="text-align: center; padding: 0rem">
         <div class="crop-container">
           <img v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
@@ -50,7 +50,18 @@
           </svg>
         </div>
       </td>
-      <td>{{card.name}}</td>
+      <td>
+        {{card.name}}
+        <!--<div v-if="isRed(card)" class="top-border-red">
+           {{card.name}}
+         </div>
+         <div v-if="isYellow(card)" class="top-border-yellow">
+           {{card.name}}
+         </div>
+         <div v-if="isBlue(card)" class="top-border-blue">
+           {{card.name}}
+         </div>-->
+      </td>
       <td>{{card.type}}</td>
       <!-- Stats -->
       <td>
@@ -77,12 +88,10 @@
             <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="" /> {{card.stats.defense}}
           </div>
         </div>
-
-
       </td> <!-- TODO: Image for stats-->
-      <td>
+      <!--<td>
         <button class="btn btn-outline-primary disabled" >+</button>
-      </td>
+      </td>-->
       <!--<td>{{card.stats.resource || "-"}}</td>
       <td>{{card.stats.cost || "-"}}</td>
       <td>{{card.stats.power || "-"}}</td>
@@ -95,6 +104,7 @@
 <script>
 import {ref} from "vue";
 import Pagination from "../common/Pagination";
+import router from "../../router";
 
 export default {
   name: "CardTable",
@@ -115,6 +125,10 @@ export default {
 
     const cardsToDisplay = (page) => {
       display.value = props.cards.slice(props.nCardToDisplay*page, props.nCardToDisplay*(page+1))
+    }
+
+    const goToCardDetails = (code) => {
+      router.push({ path: `/card-details/${code}` })
     }
 
     const isRed = (card) => {
@@ -161,6 +175,7 @@ export default {
       display,
       cardsToDisplay,
       getPages,
+      goToCardDetails,
       generateImgLinkByCardCode,
       isRed, isYellow, isBlue,
       hasIntellect,
@@ -192,5 +207,17 @@ export default {
 }
 .stats-icon-size {
   width: 1.5rem;
+}
+.top-border-red {
+  border-top-style: solid;
+  border-top-color: red;
+}
+.top-border-yellow {
+  border-top-style: solid;
+  border-top-color: yellow;
+}
+.top-border-blue {
+  border-top-style: solid;
+  border-top-color: deepskyblue;
 }
 </style>

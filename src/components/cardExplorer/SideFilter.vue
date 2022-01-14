@@ -6,13 +6,13 @@
         <li class="list-group-item">
 
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" v-model="isAllReleasesChecked" @click="checkAllReleases()">
-            <label class="form-check-label custom-font">Any</label>
+            <input class="form-check-input" type="checkbox" v-model="isAllSetsChecked" @click="checkAllSets()">
+            <label class="form-check-label custom-font">All</label>
           </div>
 
-          <div v-for="set in releases" :key="set">
+          <div v-for="set in sets" :key="set">
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" :value="set.code" v-model="checkedReleases" @change="updateCheckedReleases()">
+              <input class="form-check-input" type="checkbox" :value="set.code" v-model="checkedSets" @change="updateCheckedSets()">
               <label class="form-check-label custom-font" >{{ set.label }}</label>
             </div>
           </div>
@@ -28,7 +28,7 @@
 
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" v-model="isAllRaritiesChecked" @click="checkAllRarities()">
-            <label class="form-check-label custom-font">Any</label>
+            <label class="form-check-label custom-font">All</label>
           </div>
 
           <div v-for="rarity in rarities" :key="rarity">
@@ -71,15 +71,15 @@ import getFrames from "../../composables/filters/side/getFrames";
 export default {
   name: "SideFilter",
   emits: [
-      "update:check-releases",
+      "update:check-sets",
       "update:check-rarities",
       "update:check-frames",
   ],
   setup (props, context) {
 
-    const { releases } = getReleases()
-    const isAllReleasesChecked = ref(false)
-    const checkedReleases = ref([])
+    const { sets } = getReleases()
+    const isAllSetsChecked = ref(false)
+    const checkedSets = ref([])
 
     const { rarities } = getRarities()
     const isAllRaritiesChecked = ref(false)
@@ -88,16 +88,16 @@ export default {
     const { frames } = getFrames()
     const checkedFrames = ref([])
 
-    const checkAllReleases = () => {
-      isAllReleasesChecked.value = true
-      checkedReleases.value = []
-      releases.forEach(set => checkedReleases.value.push(set.code))
-      context.emit("update:check-releases", checkedReleases.value)
+    const checkAllSets = () => {
+      isAllSetsChecked.value = true
+      checkedSets.value = []
+      sets.forEach(set => checkedSets.value.push(set.code))
+      context.emit("update:check-sets", checkedSets.value)
     }
 
-    const updateCheckedReleases = () => {
-      isAllReleasesChecked.value = checkedReleases.value.length >= releases.length;
-      context.emit("update:check-releases", checkedReleases.value)
+    const updateCheckedSets = () => {
+      isAllSetsChecked.value = checkedSets.value.length >= sets.length;
+      context.emit("update:check-sets", checkedSets.value)
     }
 
     const checkAllRarities = () => {
@@ -117,7 +117,7 @@ export default {
     }
 
     return {
-      releases, checkedReleases, updateCheckedReleases, isAllReleasesChecked, checkAllReleases,
+      sets, checkedSets, updateCheckedSets, isAllSetsChecked, checkAllSets,
       rarities, checkedRarities, updateCheckedRarities, isAllRaritiesChecked, checkAllRarities,
       frames, checkedFrames, updateCheckedFrames
     }

@@ -3,7 +3,7 @@
   <NavBar />
   <br/>
 
-  <div class="container">
+  <div class="container" style="min-height: 65vh">
     <div class="container-fluid">
       <router-view/>
     </div>

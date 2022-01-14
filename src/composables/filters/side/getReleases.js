@@ -1,13 +1,11 @@
 
-const getReleases = () => {
-    const releases = [
+const getSets = () => {
+    const sets = [
         {code: "wtr", label: "WTR", name: "Welcome to Rathe"},
         {code: "arc", label: "ARC", name: "Arcane Rising"},
-        {code: "cru", label: "CRU", name: "Crucible"},
-        {code: "mon", label: "MON", name: "Monarch"},
     ]
 
-    return { releases }
+    return { sets }
 }
 
-export default getReleases
+export default getSets
