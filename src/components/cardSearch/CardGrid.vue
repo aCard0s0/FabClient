@@ -9,10 +9,10 @@
     <!--<div  v-for="card in cards" :key="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">-->
     <div v-for="card in display" v-if="cards.length">
       <div v-if="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
-        <div class="card" style="width: 10rem;" @click="openCardDetails(card)">
+        <div class="card" style="width: 10rem;" @click="goToCardDetails(card.cardCode)">
           {{ card.cardCode }}
 
-          <img alt="..." class="card-img-top" v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
+          <img class="card-img-top" v-bind:alt="card.cardCode" v-bind:src="getPublicImageGCP(card.setCode, card.cardCode)"/>
 
           <!--<div class="justify-content-center" style="display: flex; font-size:12px;">
             <div v-for="frame in card.frames" :key="frame">
@@ -37,6 +37,7 @@
 <script>
 import {ref} from "vue";
 import Pagination from "../common/Pagination";
+import router from "../../router";
 
 export default {
   name: "CardGrid",
@@ -48,15 +49,14 @@ export default {
   setup(props) {
     const display = ref(props.cards.slice(0, props.nCardToDisplay))
 
-    const openCardDetails = (card) => {
-      console.log("open modal with card details")
-      console.log(card)
+    const goToCardDetails = (code) => {
+      router.push({ path: `/card-details/${code}` })
     }
 
-    const generateImgLinkByCardCode = (cardCode) => {
-      let regex = new RegExp("^.[A-Z-]{0,4}");
-      let matches = regex.exec(cardCode);
-      return matches && require(`@/assets/imgs/${matches[0].toLowerCase()}/${cardCode}.png`)
+    const getPublicImageGCP = (setCode, cardCode) => {
+      if (setCode !== undefined && cardCode !== undefined) {
+        return `https://storage.googleapis.com/fd-cards-images/${setCode.toLowerCase()}/${cardCode}.png`
+      }
     }
 
     const getPages = () => {
@@ -71,8 +71,8 @@ export default {
       display,
       cardsToDisplay,
       getPages,
-      openCardDetails,
-      generateImgLinkByCardCode,
+      goToCardDetails,
+      getPublicImageGCP,
     }
   }
 }

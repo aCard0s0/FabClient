@@ -4,7 +4,7 @@
 
     <div class="row">
       <div class="col-4">
-        <img alt="..." class="card-img-top" v-bind:src="generateImgLinkByCardCode(cards[0].cardCode)"/>
+        <img class="card-img-top" v-bind:alt="cards[0].cardCode" v-bind:src="getPublicImageGCP(cards[0].setCode, cards[0].cardCode)"/>
       </div>
 
       <div class="col-8" style="text-align: left">
@@ -96,10 +96,10 @@ export default {
 
     loadCardDetails(useRoute().params.code)
 
-    const generateImgLinkByCardCode = (cardCode) => {
-      let regex = new RegExp("^.[A-Z-]{0,4}");
-      let matches = regex.exec(cardCode);
-      return matches && require(`@/assets/imgs/${matches[0].toLowerCase()}/${cardCode}.png`)
+    const getPublicImageGCP = (setCode, cardCode) => {
+      if (setCode !== undefined && cardCode !== undefined) {
+        return `https://storage.googleapis.com/fd-cards-images/${setCode.toLowerCase()}/${cardCode}.png`
+      }
     }
 
     const convertRarity = (rarity) => {
@@ -146,7 +146,7 @@ export default {
 
     return {
       cards,
-      generateImgLinkByCardCode,
+      getPublicImageGCP,
       convertRarity,
       hasIntellect,
       hasLife,

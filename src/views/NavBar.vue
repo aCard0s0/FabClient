@@ -9,38 +9,31 @@
         <img src="@/assets/logo-placeholder.png" style="width: 7rem"/>
       </router-link>
 
-      <!-- Toggle button -->
-      <button
-          aria-controls="navbarButtonsExample"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          class="navbar-toggler"
-          data-mdb-target="#navbarButtonsExample"
-          data-mdb-toggle="collapse"
-          type="button"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
+      <!-- Toggle button
+      <button data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <font-awesome-icon icon="bars" />
+      </button>-->
 
-      <!-- Collapsible wrapper -->
-      <div id="navBar" class="collapse navbar-collapse">
+
+      <!-- Collapsible wrapper  class="collapse navbar-collapse" -->
+      <div id="navBar" class="navbar-collapse">
         <!-- Left links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/">Rathe Hub</router-link>
+            <router-link to="/">FableDeck</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/card-search">Card Searcher</router-link>
           </li>
           <!--<li class="nav-item">
             <router-link to="/deck-builder">Deck Builder</router-link>
-          </li>-->
+          </li>
           <li class="nav-item">
             <router-link to="/feedback">Feedback</router-link>
-          </li>
+          </li>-->
         </ul>
 
-        <!-- Right links -->
+        <!-- Right links
         <div class="d-flex align-items-center">
           <button class="btn btn-link px-3 me-2" type="button">
             Login
@@ -48,7 +41,7 @@
           <button class="btn btn-primary me-3" type="button">
             Sign up
           </button>
-        </div>
+        </div>-->
       </div>
       <!-- Collapsible wrapper -->
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to the <b>Rathe Hub</b></h1>
+  <h1>Welcome to the <b>FableDeck</b></h1>
 
   <p style="text-align: left">
     <br />
@@ -13,12 +13,9 @@
     This is a <b>alpha</b> version of something bigger with more functionalities. Meanwhile we hope you enjoy this card search engine we designed for you.
     <br />
     <br />
-    Any <router-link to="/feedback">feedback</router-link> is appreciated.
-    <br />
-    <br />
     <b>Massive thank you,</b>
     <br />
-    Rathe Hub Team
+    FableDeck Team
   </p>
 </template>
 

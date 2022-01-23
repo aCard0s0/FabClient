@@ -38,8 +38,13 @@ const getCardsSearch = () => {
     const error = ref(null)
 
     const loadDefaultCards = () => {
-      return loadCards("",[],[],"")
+      return loadCards("",["wtr"],[],"")
           .then(response => response)
+    }
+
+    const loadByQuery = (query) => {
+        return loadCards(query,[],[],"")
+            .then(response => response)
     }
 
     const loadCards = async (
@@ -65,7 +70,9 @@ const getCardsSearch = () => {
         console.log("Params", params)
 
         // 'http://localhost:1010/v0/fab/cards/search'
-        const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards/search"
+        // const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards/search"
+
+        const url = "https://"+ process.env.VUE_APP_SERVER_URL + process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards/search"
 
         axios.get(url, { params: params })
             .then(response => cards.value = response.data)

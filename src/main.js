@@ -15,7 +15,7 @@ import {
     faSearch, faExclamationCircle,
     faEnvelope,
     faSnowflake, faStar, faSyncAlt,
-    faFilter, faEraser
+    faFilter, faEraser, faBars
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch)
@@ -26,6 +26,7 @@ library.add(faStar)
 library.add(faSyncAlt)
 library.add(faFilter)
 library.add(faEraser)
+library.add(faBars)
 
 createApp(App)
     .use(router)

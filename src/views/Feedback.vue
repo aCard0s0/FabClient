@@ -56,18 +56,20 @@ export default {
     const text = ref("")
 
     const sendFeedback = () => {
-      const body = {
-        ...(email.value.length ? {email: email.value} : {}),
-        ...(text.value.length ? {text: text.value} : {})
-      }
+      if (email.value !== "" && text.value !== "") {
+        const body = {
+          ...(email.value.length ? {email: email.value} : {}),
+          ...(text.value.length ? {text: text.value} : {})
+        }
 
-      const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/feedback"
-      axios.post(url, body)
-          .catch(error => console.log(error))
-      .finally(() => {
-        email.value = ""
-        text.value = ""
-      })
+        const url = "https://"+ process.env.VUE_APP_SERVER_URL + process.env.VUE_APP_SERVER_PORT +"/v0/feedback"
+        axios.post(url, body)
+            .catch(error => console.log(error))
+            .finally(() => {
+              email.value = ""
+              text.value = ""
+            })
+      }
     }
 
     return {

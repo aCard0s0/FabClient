@@ -25,7 +25,7 @@
     <tr class="table-row-hover" v-for="card in display" @click="goToCardDetails(card.cardCode)">
       <td style="text-align: center; padding: 0rem">
         <div class="crop-container">
-          <img v-bind:src="generateImgLinkByCardCode(card.cardCode)"/>
+          <img v-bind:alt="card.cardCode" v-bind:src="getPublicImageGCP(card.setCode, card.cardCode)"/>
         </div>
       </td>
       <td style="text-align: center">
@@ -113,10 +113,13 @@ export default {
   setup(props) {
     const display = ref(props.cards.slice(0, props.nCardToDisplay))
 
-    const generateImgLinkByCardCode = (cardCode) => {
-      let regex = new RegExp("^.[A-Z-]{0,4}");
-      let matches = regex.exec(cardCode);
-      return matches && require(`@/assets/imgs/${matches[0].toLowerCase()}/${cardCode}.png`)
+    const getPublicImageGCP = (setCode, cardCode) => {
+      // let setRegex = new RegExp("^.[A-Z-]{0,4}");
+      // let set = setRegex.exec(cardCode)[0].toLowerCase();
+      // require(`@/assets/imgs/${matches[0].toLowerCase()}/${cardCode}.png`)
+      if (setCode !== undefined && cardCode !== undefined) {
+        return `https://storage.googleapis.com/fd-cards-images/${setCode.toLowerCase()}/${cardCode}.png`
+      }
     }
 
     const getPages = () => {
@@ -176,7 +179,7 @@ export default {
       cardsToDisplay,
       getPages,
       goToCardDetails,
-      generateImgLinkByCardCode,
+      getPublicImageGCP,
       isRed, isYellow, isBlue,
       hasIntellect,
       hasLife,

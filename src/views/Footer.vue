@@ -35,7 +35,7 @@
         <div class="row mt-3">
           <div class="col-3 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold">
-              Rathe Hub
+              Fable Deck
             </h6>
             <p>
               Made by players to players
@@ -65,7 +65,7 @@
             </h6>
             <p>
               <i class="fas fa-envelope me-3"></i>
-              <font-awesome-icon icon="envelope" /> rathehub@gmail.com
+              <font-awesome-icon icon="envelope" /> fabledeck@gmail.com
             </p>
           </div>
         </div>

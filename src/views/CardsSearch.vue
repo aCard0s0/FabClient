@@ -48,8 +48,16 @@
       <div class="col-lg-10">
         <nav>
           <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-table-tab" data-bs-toggle="tab" data-bs-target="#nav-table" type="button" role="tab" aria-controls="nav-table" aria-selected="false">Table</button>
-            <button class="nav-link" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true">Grid</button>
+            <button
+                class="nav-link active" id="nav-table-tab" type="button" role="tab"
+                data-bs-toggle="tab" data-bs-target="#nav-table" aria-controls="nav-table" aria-selected="false">
+              Table
+            </button>
+            <button class="nav-link" id="nav-grid-tab" type="button" role="tab"
+                    data-bs-toggle="tab" data-bs-target="#nav-grid" aria-controls="nav-grid" aria-selected="true">
+              Grid
+            </button>
+
             <div class="dropdown">
               <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Size: {{nCardToDisplay}}
@@ -95,16 +103,17 @@
 
 <script>
 import {ref} from "vue";
-import CardTable from "../components/cardExplorer/CardTable";
-import CardGrid from "../components/cardExplorer/CardGrid";
+import CardTable from "../components/cardSearch/CardTable";
+import CardGrid from "../components/cardSearch/CardGrid";
 import getCardsSearch from "../composables/getCardsSearch";
-import SideFilter from "../components/cardExplorer/SideFilter";
-import MoreFilters from "../components/cardExplorer/MoreFilters";
+import SideFilter from "../components/cardSearch/SideFilter";
+import MoreFilters from "../components/cardSearch/MoreFilters";
 
 export default {
   name: "CardSearcher",
   components: {MoreFilters, SideFilter, CardTable, CardGrid },
   setup () {
+    const selectedTab = ref("table")
     const nCardToDisplay = ref(24)
     const query = ref("")
     // more filters

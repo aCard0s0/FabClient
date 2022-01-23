@@ -8,13 +8,19 @@ const getCardDetails = () => {
     const loadCardDetails = async (code) => {
 
         // 'http://localhost:1010/v0/fab/cards?codes=arc005'
-        const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards"
+        // const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards"
+
+        const url = "https://"+ process.env.VUE_APP_SERVER_URL + process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards"
 
         const params = {
             ...(code.length ? {codes: code} : {})
         }
 
-        axios.get(url, { params: params })
+        /*const headers = {
+            "Access-Control-Allow-Origin": "*"
+        }*/
+
+        axios.get(url, { params: params }) // headers: headers,
             .then(response => cards.value = response.data)
             .catch(error => console.log(error))
     }
