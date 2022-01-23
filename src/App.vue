@@ -23,6 +23,30 @@
   color: #2c3e50;
 }
 
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #e5b55d !important;
+  border-color: #e5b55d !important;
+}
+
+.btn-link, .a {
+  color: #e5b55d !important;
+}
+
+a:link,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: #e5b55d !important;
+}
+
+.nav-link {
+  color: #e5b55d !important;
+}
+
+.form-check-input:checked {
+  background-color: #e5b55d !important;
+  border-color: #e5b55d !important;
+}
 
 </style>
 <script>
