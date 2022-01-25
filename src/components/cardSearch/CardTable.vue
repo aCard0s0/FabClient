@@ -67,25 +67,25 @@
       <td>
         <div class="row">
           <div v-if="hasResources(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="" /> {{card.stats.resource}}
+            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="fab card resources generated" /> {{card.stats.resource}}
           </div>
           <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="" /> {{card.stats.cost}}
+            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="fab card resources cost" /> {{card.stats.cost}}
           </div>
           <div v-if="hasIntellect(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/intellect.png" alt="" /> {{card.stats.intellect}}
+            <img class="stats-icon-size" src="@/assets/imgs/icons/intellect.png" alt="fab card intellect" /> {{card.stats.intellect}}
           </div>
           <div v-if="hasLife(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/life.png" alt="" /> {{card.stats.life}}
+            <img class="stats-icon-size" src="@/assets/imgs/icons/life.png" alt="fab card hero life" /> {{card.stats.life}}
           </div>
         </div>
         <div class="row">
           <div v-if="hasPower(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="" /> {{card.stats.power}}
+            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="fab card attack" /> {{card.stats.power}}
           </div>
 
           <div v-if="hasDefense(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="" /> {{card.stats.defense}}
+            <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="fab card defense" /> {{card.stats.defense}}
           </div>
         </div>
       </td> <!-- TODO: Image for stats-->

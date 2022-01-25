@@ -42,7 +42,7 @@ const getCardsSearch = () => {
           .then(response => response)
     }
 
-    const loadByQuery = (query) => {
+    const loadCardsByQuery = (query) => {
         return loadCards(query,[],[],"")
             .then(response => response)
     }
@@ -79,7 +79,7 @@ const getCardsSearch = () => {
             .catch(error => console.log(error))
     }
 
-    return {cards, loadCards, loadDefaultCards}
+    return {cards, loadCards, loadDefaultCards, loadCardsByQuery}
 }
 
 export default getCardsSearch

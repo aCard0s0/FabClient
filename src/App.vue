@@ -3,7 +3,7 @@
   <NavBar />
   <br/>
 
-  <div class="container" style="min-height: 65vh">
+  <div class="container" style="min-height: 72vh">
     <div class="container-fluid">
       <router-view/>
     </div>
@@ -23,8 +23,29 @@
   color: #2c3e50;
 }
 
+.container {
+  margin: 0;
+  max-width: 1620px !important;
+  width: 90%;
+}
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 85%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 70%;
+  }
+}
+
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
   background-color: #e5b55d !important;
+  border-color: #e5b55d !important;
+}
+
+.btn-outline-primary {
+  color: #e5b55d !important;
   border-color: #e5b55d !important;
 }
 
@@ -39,6 +60,15 @@ a:active {
   color: #e5b55d !important;
 }
 
+.accordion-button  {
+  color: #e5b55d !important;
+  font-weight: bold;
+}
+
+.accordion-button:not (.collapsed)  {
+  background-color: #e1dbcb !important;
+}
+
 .nav-link {
   color: #e5b55d !important;
 }
@@ -46,6 +76,10 @@ a:active {
 .form-check-input:checked {
   background-color: #e5b55d !important;
   border-color: #e5b55d !important;
+}
+
+.text-gold {
+  color: #e5b55d !important;
 }
 
 </style>

@@ -3,7 +3,7 @@ const getFrames = () => {
     const frames = [
         {code: "cf", name: "Cold Foil"},
         {code: "rf", name: "Rainbow Foil"},
-        {code: "ds", name: "Double Slided"},
+        {code: "ds", name: "Double Side"},
     ]
 
     return { frames }

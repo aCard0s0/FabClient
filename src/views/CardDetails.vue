@@ -85,7 +85,6 @@
 
 import { useRoute } from 'vue-router';
 import getCardDetails from "../composables/getCardDetails";
-import {ref} from "vue";
 
 export default {
   name: "CardDetails",

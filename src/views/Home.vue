@@ -1,5 +1,6 @@
 <template>
-  <h1>Welcome to the <b>FableDeck</b></h1>
+
+  <SearchBar @click:input-query-submit="handleQuerySubmit" />
 
   <p style="text-align: left">
     <br />
@@ -20,9 +21,24 @@
 </template>
 
 <script>
+import SearchBar from "../components/cardSearch/SearchBar";
+import loadCardsByQuery from "../composables/getCardsSearch";
+import router from "../router";
+
 export default {
   name: 'Home',
   components: {
+    SearchBar
+  },
+  setup() {
+    const handleQuerySubmit = (query) => {
+      loadCardsByQuery(query)
+      router.push({ path: `/card-search/` })
+    }
+
+    return {
+      handleQuerySubmit
+    }
   }
 }
 </script>

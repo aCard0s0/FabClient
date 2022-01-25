@@ -1,20 +1,7 @@
 <template>
-    <!-- Search Bar -->
-    <div class="row justify-content-md-center">
-      <div class="col-md-7">
-        <div class="input-group">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="Search by card code, name or text"
-                 aria-label="Search" aria-describedby="basic-addon2" v-model="query" @keyup.enter="handleSearchSubmit(query)">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="handleSearchSubmit(query)" >
-              <font-awesome-icon icon="search" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <SearchBar @click:input-query-submit="handleQuerySubmit" />
 
-    <!-- More filters -->
+    <!-- More filters
     <div class="row justify-content-md-center">
       <div class="col-10">
         <MoreFilters
@@ -33,19 +20,33 @@
             :defense = defenseInput
             @update:input-defense="updateInputDefense"/>
       </div>
-    </div>
+    </div>-->
 
     <div class="row">
       <!-- SideFilter -->
-      <div class="col-lg-2" style="padding-top: 40px">
+      <div class="col-sm-2" style="padding-top: 40px; padding-right: 0">
         <SideFilter
             @update:check-sets="updateCheckedSets"
+            :clazz = clazz
+            @update:selected-class="updateSelectedClass"
+            :talent = talent
+            @update:selected-talent="updateSelectedTalent"
+            :type = type
+            @update:selected-type="updateSelectedType"
+            :resources = resources
+            @update:selected-resources="updateSelectedResources"
+            :cost = costInput
+            @update:input-cost="updateInputCost"
+            :power = powerInput
+            @update:input-power="updateInputPower"
+            :defense = defenseInput
+            @update:input-defense="updateInputDefense"
             @update:check-rarities="updateCheckedRarities"
             @update:check-frames="updateCheckedFrames"/>
       </div>
 
       <!-- Main Content -->
-      <div class="col-lg-10">
+      <div class="col-sm-10">
         <nav>
           <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
             <button
@@ -108,14 +109,14 @@ import CardGrid from "../components/cardSearch/CardGrid";
 import getCardsSearch from "../composables/getCardsSearch";
 import SideFilter from "../components/cardSearch/SideFilter";
 import MoreFilters from "../components/cardSearch/MoreFilters";
+import SearchBar from "../components/cardSearch/SearchBar";
+import {useRoute} from "vue-router";
 
 export default {
   name: "CardSearcher",
-  components: {MoreFilters, SideFilter, CardTable, CardGrid },
+  components: {SearchBar, MoreFilters, SideFilter, CardTable, CardGrid },
   setup () {
-    const selectedTab = ref("table")
     const nCardToDisplay = ref(24)
-    const query = ref("")
     // more filters
     const resources = ref("")
     const clazz = ref("")
@@ -133,6 +134,7 @@ export default {
     const {cards, loadCards, loadDefaultCards } = getCardsSearch()
 
     loadDefaultCards()
+    useRoute()
 
     const onNumCardToDisplay = (nCards) => {
       nCardToDisplay.value = nCards
@@ -185,7 +187,8 @@ export default {
     }
     //endregion
 
-    const handleSearchSubmit = (query) => {
+    const handleQuerySubmit = (query) => {
+      console.log("send", query)
       loadCards(
           query, checkedSets.value, checkedRarities.value, checkedFrames.value,
           resources.value.value, clazz.value.value, type.value.value, talent.value.value,
@@ -196,7 +199,7 @@ export default {
     return {
       cards,
       nCardToDisplay, onNumCardToDisplay,
-      query, handleSearchSubmit,
+      handleQuerySubmit,
       // more filters
       resources,  updateSelectedResources,
       clazz, updateSelectedClass,
