@@ -3,7 +3,7 @@
   <NavBar />
   <br/>
 
-  <div class="container" style="min-height: 72vh">
+  <div class="container" style="min-height: 64vh">
     <div class="container-fluid">
       <router-view/>
     </div>
@@ -19,7 +19,6 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

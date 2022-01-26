@@ -1,5 +1,6 @@
 <template>
-    <SearchBar @click:input-query-submit="handleQuerySubmit" />
+    <SearchBar
+        @click:input-query-submit="handleQuerySubmit" />
 
     <!-- More filters
     <div class="row justify-content-md-center">
@@ -103,14 +104,14 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import CardTable from "../components/cardSearch/CardTable";
 import CardGrid from "../components/cardSearch/CardGrid";
 import getCardsSearch from "../composables/getCardsSearch";
 import SideFilter from "../components/cardSearch/SideFilter";
 import MoreFilters from "../components/cardSearch/MoreFilters";
 import SearchBar from "../components/cardSearch/SearchBar";
-import {useRoute} from "vue-router";
+import {queryStore} from "../stores/queryStore";
 
 export default {
   name: "CardSearcher",
@@ -131,10 +132,18 @@ export default {
     const checkedRarities = ref([])
     const checkedFrames = ref([])
     // API calls
-    const {cards, loadCards, loadDefaultCards } = getCardsSearch()
+    const {cards, loadCards, loadDefaultCards, loadCardsByQuery } = getCardsSearch()
 
-    loadDefaultCards()
-    useRoute()
+    const store = queryStore()
+
+    onMounted(() => {
+      if (store.getQuery !== "") {
+        loadCardsByQuery(store.getQuery)
+      } else {
+        loadDefaultCards()
+      }
+    })
+
 
     const onNumCardToDisplay = (nCards) => {
       nCardToDisplay.value = nCards
@@ -188,7 +197,6 @@ export default {
     //endregion
 
     const handleQuerySubmit = (query) => {
-      console.log("send", query)
       loadCards(
           query, checkedSets.value, checkedRarities.value, checkedFrames.value,
           resources.value.value, clazz.value.value, type.value.value, talent.value.value,

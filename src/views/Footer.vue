@@ -12,7 +12,8 @@
             </h6>
             <p>
               <i class="fas fa-envelope me-3"></i>
-              <font-awesome-icon icon="envelope" /> fabledeck@gmail.com
+              <font-awesome-icon icon="envelope"/>
+              fabledeck@gmail.com
             </p>
             <!--
             <div>
@@ -44,17 +45,28 @@
             </h6>
             <div class="left-margin" style="font-size: 14px">
               <p>
-                <b >BTC:</b> <code>bc1qstd8re32lcvmnwlu6cl2ac42kp42z2a75utnue</code>
-                <br />
+                <b>BTC:</b> <code>bc1qstd8re32lcvmnwlu6cl2ac42kp42z2a75utnue</code>
+                <br/>
                 <b>ETH:</b> <code>0x2a7D2c548A473274978D457d55461ceD46583DF4</code>
-                <br />
+                <br/>
                 <b>ADA:</b> <code>Ae2tdPwUPEZ65cQZgEojjkpKeSAVMyFmj1sznkvTaJeEV88YBjnuF2EK7mD</code>
-                <br />
+                <br/>
                 <b>XRP:</b> <code>rHkh4eoSmboLzjnvMTAf65tsjZnHWEDn39</code>
               </p>
             </div>
           </div>
 
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-12" style="text-align: center; font-size: 12px">
+            <p>
+              The majority of the content of this website belongs <a href="https://legendstory.com/" target="_blank"><b>Legend
+              Story Studios®</b></a>, featuring <a href="https://fabtcg.com/" target="_blank"><b>Flesh & Blood™ TCG</b></a>.
+              <br/>
+              FableDeck is not a gaming product neither is affiliated with Legend Story Studios®.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -73,9 +85,11 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
 code {
   color: inherit !important;
 }
+
 .left-margin {
   margin-left: 1rem;
 }

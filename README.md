@@ -23,6 +23,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 [BootstrapVue 3](https://cdmoro.github.io/bootstrap-vue-3/components/FormCheckbox.html#checkbox-values-and-v-model)
 
+[Pinia Github](https://github.com/vuejs/pinia)
+
+[Pinia Docs](https://pinia.vuejs.org/introduction.html)
+
 vue draggable
 https://github.com/SortableJS/vue.draggable.next
 https://sortablejs.github.io/vue.draggable.next/#/transition-example-2

@@ -21,20 +21,23 @@
 
 <script>
 
+import {queryStore} from "../../stores/queryStore";
+
 export default {
   name: "SearchBar",
+
   emits: [
     "click:input-query-submit"
   ],
   setup(props, context) {
-    let query;
+    const store = queryStore()
 
     const handleQuerySubmit = (query) => {
       context.emit("click:input-query-submit", query)
     }
 
     return {
-      query,
+      query: store.getQuery,
       handleQuerySubmit
     }
   }

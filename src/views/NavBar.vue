@@ -4,7 +4,7 @@
     <div class="container-fluid">
 
       <router-link to="/" class="navbar-brand me-2">
-        <img src="@/assets/logo-placeholder.png" style="width: 7rem"/>
+        <img src="@/assets/imgs/logo/fabledeck-logo.png" style="width: 8rem"/>
       </router-link>
 
       <button aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
@@ -12,11 +12,8 @@
         <font-awesome-icon icon="bars" />
       </button>
 
-      <div id="navBar" class="collapse navbar-collapse">
+      <div id="navBar" class="collapse navbar-collapse" style="margin-left: 3rem">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/">FableDeck</router-link>
-          </li>
           <li class="nav-item">
             <router-link to="/card-search">Card Searcher</router-link>
           </li>
@@ -68,7 +65,8 @@ export default {
 
 <style scoped>
 nav {
-  padding: 0 2rem 0 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  font-size: 17px;
 }
 #navBar a {
   font-weight: bold;
