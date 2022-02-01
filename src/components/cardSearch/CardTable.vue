@@ -109,6 +109,12 @@
     </tr>
     </tbody>
   </table>
+
+  <Pagination
+      v-if="getPages() > 1"
+      :nPages="getPages()"
+      @update:show-page="cardsToDisplay"/>
+
 </template>
 
 <script>

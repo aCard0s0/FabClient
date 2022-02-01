@@ -43,6 +43,8 @@
 
 <script>
 import {ref} from "vue";
+import {usePaginationStore} from "../../stores/paginationStore";
+import {storeToRefs} from "pinia/dist/pinia";
 
 export default {
   name: "Pagination",
@@ -50,7 +52,10 @@ export default {
   props: ['nPages'],
   setup(props, context) {
     const nPages = props.nPages
-    const currentPage = ref(1)
+
+    const paginationStore = usePaginationStore()
+    const { currentPage } = storeToRefs(paginationStore);
+    const { setCurrentPage } = paginationStore;
 
     let showGoToFirst = ref(false);
     let showGoToPrevious = ref(false);
@@ -91,13 +96,13 @@ export default {
 
     const showPage = (page) => {
       if (page >= nPages) {
-        currentPage.value = nPages
+        setCurrentPage(nPages)
       } else if (page < 1){
-        currentPage.value = 1
+        setCurrentPage(1)
       } else {
-        currentPage.value = page
+        setCurrentPage(page)
       }
-      context.emit("update:show-page", currentPage.value-1)
+      context.emit("update:show-page", currentPage.value - 1)
     }
 
     const previousPage = () => {
