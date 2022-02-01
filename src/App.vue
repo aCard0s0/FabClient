@@ -3,11 +3,9 @@
   <NavBar />
   <br/>
 
-  <div class="container" style="min-height: 64vh">
-    <div class="container-fluid">
+    <div class="container-fluid" style="min-height: 64vh">
       <router-view/>
     </div>
-  </div>
 
   <br />
   <Footer />
@@ -19,26 +17,18 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   color: #2c3e50;
 }
 
-.container {
-  margin: 0;
-  max-width: 1620px !important;
-  width: 90%;
-}
-@media only screen and (min-width: 601px) {
-  .container {
-    width: 85%;
-  }
-}
-@media only screen and (min-width: 993px) {
-  .container {
-    width: 70%;
+@media (min-width: 1305px) {
+  .container-fluid{
+    width: 1300px;
   }
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited  {
   background-color: #e5b55d !important;
   border-color: #e5b55d !important;
 }
@@ -48,7 +38,7 @@
   border-color: #e5b55d !important;
 }
 
-.btn-link, .a {
+.btn-link, .a, .page-link {
   color: #e5b55d !important;
 }
 
@@ -57,6 +47,12 @@ a:hover,
 a:active {
   text-decoration: none;
   color: #e5b55d !important;
+}
+
+.page-item.active .page-link {
+  color: #ffffff !important;
+  background-color: #e5b55d !important;
+  border-color: #e5b55d !important;
 }
 
 .accordion-button  {

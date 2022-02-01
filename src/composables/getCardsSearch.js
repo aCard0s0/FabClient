@@ -2,8 +2,8 @@ import { ref } from "vue";
 import axios from "axios";
 
 function buildParameters(
-    query, sets, rarities, frames, resources, clazz, type,
-    talent, cost, power, defense, text, intellect, life) {
+    query, sets, rarities, clazz, talent, type,
+    resources, cost, power, defense, intellect, life, frames) {
 
     // TODO: improve this logic
     clazz = clazz === "All" ? "" : clazz
@@ -13,17 +13,16 @@ function buildParameters(
         ...(query.length ? {query: query} : {}),
         ...(sets.length ? {set: sets.map(v => v).toString() } : {}),
         ...(rarities.length ? {rarity: rarities.map(v => v).toString() } : {}),
-        ...(frames.length ? {frame: frames.map(v => v).toString() } : {}),
-        ...(resources ? {resource: resources } : {}),
         ...(clazz ? {class: clazz } : {}),
         ...(type ? {type: type } : {}),
         ...(talent ? {talent: talent } : {}),
+        ...(resources.length ? {resources: resources.map(v => v).toString() } : {}),
         ...(cost ? {cost: cost } : {}),
         ...(power ? {power: power } : {}),
         ...(defense ? {defense: defense } : {}),
         ...(intellect ? {intellect: intellect } : {}),
         ...(life ? {life: life } : {}),
-        ...(text ? {text: text } : {})
+        ...(frames.length ? {frame: frames.map(v => v).toString() } : {})
     }
 
     /*if (query.trim().length) {
@@ -37,10 +36,10 @@ const getCardsSearch = () => {
     const cards = ref([])
     const error = ref(null)
 
-    const loadDefaultCards = () => {
+    /*const loadDefaultCards = () => {
       return loadCards("",["wtr"],[],"")
           .then(response => response)
-    }
+    }*/
 
     const loadCardsByQuery = (query) => {
         return loadCards(query,[],[],"")
@@ -48,8 +47,8 @@ const getCardsSearch = () => {
     }
 
     const loadCards = async (
-        query, sets, rarities, frames, resources, clazz, type,
-        talent, cost, power, defense, text, intellect, life
+        query, sets, rarities, clazz, talent, type,
+        resources, cost, power, defense, intellect, life, frames
     ) => {
         let params = {}
         let regex = new RegExp("(wtr|arc|cru|mon)(.\\d*)")
@@ -65,9 +64,9 @@ const getCardsSearch = () => {
         }*/
 
         params = buildParameters(
-            query, sets, rarities, frames, resources, clazz, type,
-            talent, cost, power, defense, text, intellect, life)
-        console.log("Params", params)
+            query, sets, rarities, clazz, talent, type,
+            resources, cost, power, defense, intellect, life, frames)
+        //console.log("Params", params)
 
         // 'http://localhost:1010/v0/fab/cards/search'
         // const url = "http://"+ process.env.VUE_APP_SERVER_URL +":"+ process.env.VUE_APP_SERVER_PORT +"/v0/fab/cards/search"
@@ -79,7 +78,7 @@ const getCardsSearch = () => {
             .catch(error => console.log(error))
     }
 
-    return {cards, loadCards, loadDefaultCards, loadCardsByQuery}
+    return {cards, loadCards, loadCardsByQuery}
 }
 
 export default getCardsSearch

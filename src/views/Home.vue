@@ -1,12 +1,12 @@
 <template>
   <br />
 
-  <SearchBar @click:input-query-submit="handleQuerySubmit" />
+  <SearchBar @click:input-query-submit="handleQuerySubmitOnHome" />
 
   <br />
   <br />
 
-  <div style="background-color: #eae7e7; border-radius: 1rem; padding: 1rem; margin: 2rem">
+  <div style="background-color: #eae7e7; border-radius: 1rem; padding: 1rem; margin: 2rem; text-align: left">
     <h3>Welcome!</h3>
     <p style="text-align: left; padding-left: 1rem;">
       <br />
@@ -37,14 +37,14 @@ export default {
     SearchBar
   },
   setup() {
-    const handleQuerySubmit = (query) => {
+    const handleQuerySubmitOnHome = (query) => {
       const store = queryStore()
       store.query = query
       router.push({ path: `/card-search/` })
     }
 
     return {
-      handleQuerySubmit
+      handleQuerySubmitOnHome
     }
   }
 }

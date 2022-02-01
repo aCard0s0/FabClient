@@ -159,10 +159,10 @@
 
 <script>
 import {computed, ref} from "vue";
-import getClassOptions from "../../composables/filters/more/getClassOptions";
-import getTypeOptions from "../../composables/filters/more/getTypeOptions";
-import getResourceOptions from "../../composables/filters/more/getResourceOptions";
-import getTalentOptions from "../../composables/filters/more/getTalentOptions";
+import getClassOptions from "../../composables/filters/getClassOptions";
+import getTypeOptions from "../../composables/filters/getTypeOptions";
+import getResourceOptions from "../../composables/filters/getResourceOptions";
+import getTalentOptions from "../../composables/filters/getTalentOptions";
 
 export default {
   name: "MoreFilters",

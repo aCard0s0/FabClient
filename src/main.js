@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios'
 import { createPinia } from "pinia/dist/pinia";
 
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.js'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core'

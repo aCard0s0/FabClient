@@ -1,18 +1,20 @@
 <template>
 
-  <Pagination :nPages="getPages()"
-              @update:show-page="cardsToDisplay"/>
+  <Pagination
+      v-if="getPages() > 1"
+      :nPages="getPages()"
+      @update:show-page="cardsToDisplay"/>
 
   <table class="table table-hover" style="text-align: left;">
     <thead>
     <tr>
       <th scope="col" >Image</th>
-      <th scope="col" style="width: 1rem">#</th>
-      <th scope="col" style="width: 1rem">Rarity</th>
+      <th scope="col" >#</th>
+      <th scope="col" >Rarity</th>
       <th scope="col" style="width: 1rem"></th>
       <th scope="col" >Name</th>
       <th scope="col">Type</th>
-      <th scope="col" style="width: 7rem">Stats</th>
+      <th scope="col" style="min-width: 7rem">Stats</th>
       <!--<th scope="col"></th>
       <th scope="col">Resources</th>
       <th scope="col">Cost</th>
@@ -23,15 +25,23 @@
     <tbody>
 
     <tr class="table-row-hover" v-for="card in display" @click="goToCardDetails(card.cardCode)">
+
       <td style="text-align: center; padding: 0rem">
         <div class="crop-container">
           <img v-bind:alt="card.cardCode" v-bind:src="getPublicImageGCP(card.setCode, card.cardCode)"/>
         </div>
       </td>
-      <td style="text-align: center">
-        <!--{{card.cardCode.substring(0,3) +" "+ card.cardCode.substring(3,6)}}-->
+
+      <td style="text-align: left;">
         {{card.cardCode}}
+        <!--<div style="max-height: 50px; overflow-y: auto;">
+          <div v-for="printing in card.printings">
+            {{printing}}
+          </div>
+        </div>-->
+
       </td>
+
       <td style="text-align: center">{{card.rarity}}</td>
       <td style="text-align: right">
         <div v-if="isRed(card)">
@@ -67,7 +77,7 @@
       <td>
         <div class="row">
           <div v-if="hasResources(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" v-bind:src="getResourceImage(card)" alt="fab card resources generated" /> {{card.stats.resource}}
+            <img class="stats-icon-size" v-bind:src="getResourcesImage(card)" alt="fab card resources generated" /> {{card.stats.resources}}
           </div>
           <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
             <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="fab card resources cost" /> {{card.stats.cost}}
@@ -135,13 +145,13 @@ export default {
     }
 
     const isRed = (card) => {
-      return card.stats.resource === "1";
+      return card.stats.resources === "1";
     }
     const isYellow = (card) => {
-      return card.stats.resource === "2";
+      return card.stats.resources === "2";
     }
     const isBlue = (card) => {
-      return card.stats.resource === "3";
+      return card.stats.resources === "3";
     }
 
     const hasIntellect = (card) => {
@@ -160,16 +170,16 @@ export default {
       return card.stats.cost !== "";
     }
     const hasResources = (card) => {
-      return card.stats.resource !== "";
+      return card.stats.resources !== "";
     }
-    const getResourceImage = (card) => {
-      if (card.stats.resource === "1") {
+    const getResourcesImage = (card) => {
+      if (card.stats.resources === "1") {
         return require(`@/assets/imgs/icons/pitch-1.png`)
       }
-      if (card.stats.resource === "2") {
+      if (card.stats.resources === "2") {
         return require(`@/assets/imgs/icons/pitch-2.png`)
       }
-      if (card.stats.resource === "3") {
+      if (card.stats.resources === "3") {
         return require(`@/assets/imgs/icons/pitch-3.png`)
       }
     }
@@ -187,7 +197,7 @@ export default {
       hasDefense,
       hasCost,
       hasResources,
-      getResourceImage
+      getResourcesImage
     }
   }
 }
