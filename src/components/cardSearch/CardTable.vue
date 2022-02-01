@@ -1,11 +1,11 @@
 <template>
-
   <Pagination
       v-if="getPages() > 1"
       :nPages="getPages()"
       @update:show-page="cardsToDisplay"/>
 
   <table class="table table-hover" style="text-align: left;">
+    <!-- Header -->
     <thead>
     <tr>
       <th scope="col" >Image</th>
@@ -22,8 +22,12 @@
       <th scope="col">Defense</th>-->
     </tr>
     </thead>
-    <tbody>
 
+    <tbody>
+    <!-- No Data Match -->
+    <NoDataMatch v-if="display.length === 0"/>
+
+    <!-- Data Row-->
     <tr class="table-row-hover" v-for="card in display" @click="goToCardDetails(card.cardCode)">
 
       <td style="text-align: center; padding: 0rem">
@@ -114,17 +118,17 @@
       v-if="getPages() > 1"
       :nPages="getPages()"
       @update:show-page="cardsToDisplay"/>
-
 </template>
 
 <script>
 import {ref} from "vue";
 import Pagination from "../common/Pagination";
 import router from "../../router";
+import NoDataMatch from "./NoDataMatch";
 
 export default {
   name: "CardTable",
-  components: {Pagination},
+  components: {NoDataMatch, Pagination},
   props: ["cards", "nCardToDisplay"],
   setup(props) {
     const display = ref(props.cards.slice(0, props.nCardToDisplay))

@@ -2,27 +2,6 @@
   <SearchBar
       @click:input-query-submit="handleQuerySubmit"/>
 
-  <!-- More filters
-  <div class="row justify-content-md-center">
-    <div class="col-10">
-      <MoreFilters
-          :resources = resources
-          @update:selected-resources="updateSelectedResources"
-          :clazz = clazz
-          @update:selected-class="updateSelectedClass"
-          :type = type
-          @update:selected-type="updateSelectedType"
-          :talent = talent
-          @update:selected-talent="updateSelectedTalent"
-          :cost = costInput
-          @update:input-cost="updateInputCost"
-          :power = powerInput
-          @update:input-power="updateInputPower"
-          :defense = defenseInput
-          @update:input-defense="updateInputDefense"/>
-    </div>
-  </div>-->
-
   <div class="row">
     <!-- SideFilter -->
     <div class="col-sm-2" style="padding-top: 40px; padding-right: 0">
