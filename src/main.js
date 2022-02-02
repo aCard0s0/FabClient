@@ -15,7 +15,8 @@ import {
     faSearch, faExclamationCircle,
     faEnvelope,
     faSnowflake, faStar, faSyncAlt,
-    faFilter, faEraser, faBars
+    faFilter, faEraser, faBars,
+    faGripLines, faGripHorizontal, faCogs
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch)
@@ -27,6 +28,10 @@ library.add(faSyncAlt)
 library.add(faFilter)
 library.add(faEraser)
 library.add(faBars)
+library.add(faBars)
+library.add(faGripLines)
+library.add(faGripHorizontal)
+library.add(faCogs)
 
 const pinia = createPinia()
 

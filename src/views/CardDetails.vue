@@ -133,13 +133,13 @@ export default {
     }
     const getResourceImage = (card) => {
       if (card.stats.resource === "1") {
-        return require(`@/assets/imgs/icons/pitch-1.png`)
+        return require(`@/assets/imgs/icons/stats/pitch-1.png`)
       }
       if (card.stats.resource === "2") {
-        return require(`@/assets/imgs/icons/pitch-2.png`)
+        return require(`@/assets/imgs/icons/stats/pitch-2.png`)
       }
       if (card.stats.resource === "3") {
-        return require(`@/assets/imgs/icons/pitch-3.png`)
+        return require(`@/assets/imgs/icons/stats/pitch-3.png`)
       }
     }
 

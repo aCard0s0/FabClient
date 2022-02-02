@@ -12,7 +12,7 @@
         <div class="card" style="width: 10rem;" @click="goToCardDetails(card.cardCode)">
           {{ card.cardCode }}
 
-          <img class="card-img-top" v-bind:alt="card.cardCode" v-bind:src="getPublicImageGCP(card.setCode, card.cardCode)"/>
+          <img class="card-img-top" v-bind:alt="card.cardCode" v-bind:src="getFirstEdPublicImage(card.imagesPaths)"/>
 
           <!--<div class="justify-content-center" style="display: flex; font-size:12px;">
             <div v-for="frame in card.frames" :key="frame">
@@ -38,6 +38,7 @@
 import {ref} from "vue";
 import Pagination from "../common/Pagination";
 import router from "../../router";
+import cardsImages from "../../composables/images/cardsImages";
 
 export default {
   name: "CardGrid",
@@ -47,22 +48,9 @@ export default {
     testing() {console.log("testing compute")}
   },
   setup(props) {
+    const {getFirstEdPublicImage} = cardsImages()
+
     const display = ref(props.cards.slice(0, props.nCardToDisplay))
-
-    const goToCardDetails = (code) => {
-      router.push({ path: `/card-details/${code}` })
-    }
-
-    const getPublicImageGCP = (setCode, cardCode) => {
-      if (setCode !== undefined && cardCode !== undefined) {
-        return `https://storage.googleapis.com/fd-cards-images/${setCode.toLowerCase()}/${cardCode}.png`
-      }
-    }
-
-    const getPages = () => {
-      return Math.ceil(props.cards.length / props.nCardToDisplay)
-    }
-
     const cardsToDisplay = (page) => {
       display.value = props.cards.slice(props.nCardToDisplay*page, props.nCardToDisplay*(page+1))
     }
@@ -70,9 +58,9 @@ export default {
     return {
       display,
       cardsToDisplay,
-      getPages,
-      goToCardDetails,
-      getPublicImageGCP,
+      getPages: () => Math.ceil(props.cards.length / props.nCardToDisplay),
+      goToCardDetails: (code) => router.push({path: `/card-details/${code}`}),
+      getFirstEdPublicImage,
     }
   }
 }

@@ -156,21 +156,21 @@
         <div class="justify-content-center" style="padding-top: 0.2rem">
           <div class="form-check form-check-inline">
             <input v-model="checkedResources" :value="red" class="form-check-input" type="checkbox">
-            <img alt="fab card resources cost pitch 1" class="stats-icon-size" src="@/assets/imgs/icons/pitch-1.png"/>
+            <img alt="fab card resources cost pitch 1" class="stats-icon-size" src="@/assets/imgs/icons/stats/pitch-1.png"/>
           </div>
           <div class="form-check form-check-inline">
             <input v-model="checkedResources" :value="yellow" class="form-check-input" type="checkbox">
-            <img alt="fab card resources cost pitch 2" class="stats-icon-size" src="@/assets/imgs/icons/pitch-2.png"/>
+            <img alt="fab card resources cost pitch 2" class="stats-icon-size" src="@/assets/imgs/icons/stats/pitch-2.png"/>
           </div>
           <div class="form-check form-check-inline">
             <input v-model="checkedResources" :value="blue" class="form-check-input" type="checkbox">
-            <img alt="fab card resources cost pitch 3" class="stats-icon-size" src="@/assets/imgs/icons/pitch-3.png"/>
+            <img alt="fab card resources cost pitch 3" class="stats-icon-size" src="@/assets/imgs/icons/stats/pitch-3.png"/>
           </div>
         </div>
         <div class="accordion-body">
           <!-- Cost -->
           <div class="input-group">
-            <img alt="fab card resources cost" class="stats-icon-size" src="@/assets/imgs/icons/cost.png"/>
+            <img alt="fab card resources cost" class="stats-icon-size" src="@/assets/imgs/icons/stats/cost.png"/>
             <div class="dropdown">
               <button id="dropdownCostModifier" aria-expanded="false" class="btn nav-link dropdown-toggle no-padding"
                       data-bs-toggle="dropdown" type="button">
@@ -186,7 +186,7 @@
           </div>
           <!-- Power -->
           <div class="input-group">
-            <img alt="fab card attack" class="stats-icon-size" src="@/assets/imgs/icons/attack.png"/>
+            <img alt="fab card attack" class="stats-icon-size" src="@/assets/imgs/icons/stats/attack.png"/>
             <div class="dropdown">
               <button id="dropdownMenuButton4" aria-expanded="false" class="btn nav-link dropdown-toggle no-padding"
                       data-bs-toggle="dropdown" type="button">
@@ -202,7 +202,7 @@
           </div>
           <!-- Defense -->
           <div class="input-group">
-            <img alt="fab card defense" class="stats-icon-size" src="@/assets/imgs/icons/defense.png"/>
+            <img alt="fab card defense" class="stats-icon-size" src="@/assets/imgs/icons/stats/defense.png"/>
             <div class="dropdown">
               <button id="dropdownMenuButton5" aria-expanded="false" class="btn nav-link dropdown-toggle no-padding"
                       data-bs-toggle="dropdown" type="button">
@@ -218,7 +218,7 @@
           </div>
           <!-- Intellect -->
           <div class="input-group">
-            <img alt="fab card intellect" class="stats-icon-size" src="@/assets/imgs/icons/intellect.png"/>
+            <img alt="fab card intellect" class="stats-icon-size" src="@/assets/imgs/icons/stats/intellect.png"/>
             <div class="dropdown">
               <button id="dropdownMenuButton6" aria-expanded="false" class="btn nav-link dropdown-toggle no-padding"
                       data-bs-toggle="dropdown" type="button">
@@ -234,7 +234,7 @@
           </div>
           <!-- Life -->
           <div class="input-group">
-            <img alt="fab card hero life" class="stats-icon-size" src="@/assets/imgs/icons/life.png"/>
+            <img alt="fab card hero life" class="stats-icon-size" src="@/assets/imgs/icons/stats/life.png"/>
             <div class="dropdown">
               <button id="dropdownMenuButton7" aria-expanded="false" class="btn nav-link dropdown-toggle no-padding"
                       data-bs-toggle="dropdown" type="button">

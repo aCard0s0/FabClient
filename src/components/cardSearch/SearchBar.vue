@@ -1,5 +1,6 @@
 <template>
 
+  <br />
   <div class="row justify-content-md-center">
     <div class="col-md-7">
       <div class="input-group">
@@ -14,7 +15,7 @@
       </div>
     </div>
   </div>
-
+  <br />
   <!-- Search bar help -->
 
 </template>

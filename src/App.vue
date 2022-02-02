@@ -1,7 +1,6 @@
 <template>
 
   <NavBar />
-  <br/>
 
     <div class="container-fluid" style="min-height: 64vh">
       <router-view/>

@@ -39,35 +39,61 @@
           <button
               id="nav-table-tab" aria-controls="nav-table" aria-selected="false" class="nav-link active"
               data-bs-target="#nav-table" data-bs-toggle="tab" role="tab" type="button">
+            <font-awesome-icon icon="grip-lines"/>
             Table
           </button>
           <button id="nav-grid-tab" aria-controls="nav-grid" aria-selected="true" class="nav-link"
                   data-bs-target="#nav-grid" data-bs-toggle="tab" role="tab" type="button">
+            <font-awesome-icon icon="grip-horizontal"/>
             Grid
           </button>
 
-          <div class="dropdown">
-            <button id="dropdownMenuButton1" aria-expanded="false" class="btn nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown" type="button">
-              Size: {{ nCardToDisplay }}
+          <!-- Settings-->
+          <div class="dropdown" >
+            <button class="btn nav-link dropdown-toggle" type="button" id="dropdownSettings" data-bs-toggle="dropdown" aria-expanded="false">
+              <font-awesome-icon icon="cogs"/>
             </button>
-            <ul aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
-              <li><a class="dropdown-item" @click="onNumCardToDisplay(28)">28</a></li>
-              <li><a class="dropdown-item" @click="onNumCardToDisplay(56)">56</a></li>
-              <li><a class="dropdown-item" @click="onNumCardToDisplay(cards.length)">All</a></li>
-            </ul>
+            <div class="dropdown-menu setting-menu justify-content-center" style="" aria-labelledby="dropdownSettings" >
+              <!-- Page Size -->
+              <div class="row" @click.stop.prevent>
+                <div class="input-group-sm">
+                  Page Size:
+                  <input type="text" pattern="[0-9]{4}" size="4" maxlength="4" v-model="nCardToDisplay"/>
+                </div>
+              </div>
+              <hr />
+              <!-- Image size-->
+              <div class="row" @click.stop.prevent>
+                <div class="input-group-sm">
+                  Zoom:
+                  <button type="button" class="btn btn-primary setting-buttons" @click="decreaseImageSize">-</button>
+                  1.0
+                  <button type="button" class="btn btn-primary setting-buttons" @click="increaseImageSize">+</button>
+                </div>
+              </div>
+              <hr />
+              <!-- Mouse Over Zoom -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="maximize"/>
+                    Maximize
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <!-- Show grid title -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="cardTitle" />
+                    Card Title
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
-          <!-- Settings
-          <div class="dropdown">
-            <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-              Settings
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-              <li><a class="dropdown-item"> Page Size: xx </a></li>
-              <li><a class="dropdown-item"> Mouse Over </a></li>
-              <li><a class="dropdown-item"> Zoom </a></li>
-            </ul>
-          </div>-->
         </div>
       </nav>
 
@@ -96,13 +122,12 @@ import CardTable from "../components/cardSearch/CardTable";
 import CardGrid from "../components/cardSearch/CardGrid";
 import getCardsSearch from "../composables/getCardsSearch";
 import SideFilter from "../components/cardSearch/SideFilter";
-import MoreFilters from "../components/cardSearch/MoreFilters";
 import SearchBar from "../components/cardSearch/SearchBar";
 import {queryStore} from "../stores/queryStore";
 
 export default {
   name: "CardSearcher",
-  components: {SearchBar, MoreFilters, SideFilter, CardTable, CardGrid},
+  components: {SearchBar, SideFilter, CardTable, CardGrid},
   setup() {
     const {cards, loadCards} = getCardsSearch()
     const store = queryStore()
@@ -203,6 +228,18 @@ export default {
       )
     }
 
+    const decreaseImageSize = () => {
+      console.log("-")
+    }
+
+    const increaseImageSize = () => {
+      console.log("+")
+    }
+
+    const maximize = ref(true)
+    const cardTitle = ref(true)
+
+
     return {
       cards,
       nCardToDisplay, onNumCardToDisplay,
@@ -219,12 +256,30 @@ export default {
       intellectInput, updateInputIntellect,
       lifeInput, updateInputLife,
       checkedRarities, updateCheckedRarities,
-      checkedFrames, updateCheckedFrames
+      checkedFrames, updateCheckedFrames,
+      decreaseImageSize,
+      increaseImageSize,
+      maximize,
+      cardTitle
     }
   }
 }
 </script>
 
 <style scoped>
+
+.setting-menu {
+  padding: 1rem 0.75rem 1rem 0.75rem;
+  width: 10rem;
+}
+
+.setting-buttons {
+  font-weight: bolder !important;
+  font-size: 15px !important;
+}
+
+hr {
+  margin: 0.5rem 0 0.5rem 0 !important;
+}
 
 </style>

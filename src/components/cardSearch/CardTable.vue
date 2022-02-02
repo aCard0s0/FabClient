@@ -8,18 +8,12 @@
     <!-- Header -->
     <thead>
     <tr>
-      <th scope="col" >Image</th>
-      <th scope="col" >#</th>
-      <th scope="col" >Rarity</th>
-      <th scope="col" style="width: 1rem"></th>
-      <th scope="col" >Name</th>
+      <th scope="col">Image</th>
+      <th scope="col">#</th>
+      <th scope="col">Rarity</th>
+      <th scope="col">Name</th>
       <th scope="col">Type</th>
       <th scope="col" style="min-width: 7rem">Stats</th>
-      <!--<th scope="col"></th>
-      <th scope="col">Resources</th>
-      <th scope="col">Cost</th>
-      <th scope="col">Power</th>
-      <th scope="col">Defense</th>-->
     </tr>
     </thead>
 
@@ -28,16 +22,16 @@
     <NoDataMatch v-if="display.length === 0"/>
 
     <!-- Data Row-->
-    <tr class="table-row-hover" v-for="card in display" @click="goToCardDetails(card.cardCode)">
-
+    <tr v-for="card in display" class="table-row-hover" @click="goToCardDetails(card.cardCode)">
+      <!-- # Image -->
       <td style="text-align: center; padding: 0rem">
         <div class="crop-container">
-          <img v-bind:alt="card.cardCode" v-bind:src="getPublicImageGCP(card.setCode, card.cardCode)"/>
+          <img v-bind:alt="card.cardCode" v-bind:src="getFirstEdPublicImage(card.imagesPaths)"/>
         </div>
       </td>
-
+      <!-- # Versions -->
       <td style="text-align: left;">
-        {{card.cardCode}}
+        {{ card.cardCode }}
         <!--<div style="max-height: 50px; overflow-y: auto;">
           <div v-for="printing in card.printings">
             {{printing}}
@@ -45,27 +39,22 @@
         </div>-->
 
       </td>
-
-      <td style="text-align: center">{{card.rarity}}</td>
-      <td style="text-align: right">
-        <div v-if="isRed(card)">
-          <svg height="15" width="16">
-            <circle cx="8" cy="6" r="6" fill="red" />
-          </svg>
-        </div>
-        <div v-if="isYellow(card)">
-          <svg height="15" width="16">
-            <circle cx="8" cy="6" r="6" fill="yellow" />
-          </svg>
-        </div>
-        <div v-if="isBlue(card)">
-          <svg height="15" width="16">
-            <circle cx="8" cy="6" r="6" fill="deepskyblue" />
-          </svg>
-        </div>
+      <!-- Rarity -->
+      <td style="text-align: center">
+        <img class="rarity-icon-size" v-bind:src="getRarityImage(card.rarity)">
       </td>
+      <!-- Name -->
       <td>
-        {{card.name}}
+        <svg v-if="isRed(card.stats.resources)" height="15" width="16">
+          <circle cx="8" cy="6" fill="red" r="6"/>
+        </svg>
+        <svg v-if="isYellow(card.stats.resources)" height="15" width="16">
+          <circle cx="8" cy="6" fill="yellow" r="6"/>
+        </svg>
+        <svg v-if="isBlue(card.stats.resources)" height="15" width="16">
+          <circle cx="8" cy="6" fill="deepskyblue" r="6"/>
+        </svg>
+        {{ card.name }}
         <!--<div v-if="isRed(card)" class="top-border-red">
            {{card.name}}
          </div>
@@ -76,40 +65,40 @@
            {{card.name}}
          </div>-->
       </td>
-      <td>{{card.type}}</td>
+      <!-- Type -->
+      <td>{{ card.type }}</td>
       <!-- Stats -->
       <td>
         <div class="row">
-          <div v-if="hasResources(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" v-bind:src="getResourcesImage(card)" alt="fab card resources generated" /> {{card.stats.resources}}
+          <div v-if="hasResources(card.stats.resources)" class="col-6 stats-icon-padding">
+            <img alt="fab card resources generated" class="stats-icon-size"
+                 v-bind:src="getResourcesImage(card.stats.resources)"/> {{ card.stats.resources }}
           </div>
-          <div v-if="hasCost(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/cost.png" alt="fab card resources cost" /> {{card.stats.cost}}
+          <div v-if="hasCost(card.stats.cost)" class="col-6 stats-icon-padding">
+            <img alt="fab card resources cost" class="stats-icon-size" v-bind:src="getCostImage()"/>
+            {{ card.stats.cost }}
           </div>
-          <div v-if="hasIntellect(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/intellect.png" alt="fab card intellect" /> {{card.stats.intellect}}
+          <div v-if="hasIntellect(card.stats.intellect)" class="col-6 stats-icon-padding">
+            <img alt="fab card intellect" class="stats-icon-size" v-bind:src="getIntellectImage()"/>
+            {{ card.stats.intellect }}
           </div>
-          <div v-if="hasLife(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/life.png" alt="fab card hero life" /> {{card.stats.life}}
+          <div v-if="hasLife(card.stats.life)" class="col-6 stats-icon-padding">
+            <img alt="fab card hero life" class="stats-icon-size" v-bind:src="getLifeImage()"/> {{ card.stats.life }}
           </div>
         </div>
         <div class="row">
-          <div v-if="hasPower(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/attack.png" alt="fab card attack" /> {{card.stats.power}}
+          <div v-if="hasPower(card.stats.power)" class="col-6 stats-icon-padding">
+            <img alt="fab card attack" class="stats-icon-size" v-bind:src="getAttackImage()"/> {{ card.stats.power }}
           </div>
-
-          <div v-if="hasDefense(card)" class="col-6 stats-icon-padding">
-            <img class="stats-icon-size" src="@/assets/imgs/icons/defense.png" alt="fab card defense" /> {{card.stats.defense}}
+          <div v-if="hasDefense(card.stats.defense)" class="col-6 stats-icon-padding">
+            <img alt="fab card defense" class="stats-icon-size" v-bind:src="getDefenseImage()"/>
+            {{ card.stats.defense }}
           </div>
         </div>
-      </td> <!-- TODO: Image for stats-->
+      </td>
       <!--<td>
         <button class="btn btn-outline-primary disabled" >+</button>
       </td>-->
-      <!--<td>{{card.stats.resource || "-"}}</td>
-      <td>{{card.stats.cost || "-"}}</td>
-      <td>{{card.stats.power || "-"}}</td>
-      <td>{{card.stats.defense || "-"}}</td>-->
     </tr>
     </tbody>
   </table>
@@ -125,89 +114,54 @@ import {ref} from "vue";
 import Pagination from "../common/Pagination";
 import router from "../../router";
 import NoDataMatch from "./NoDataMatch";
+import raritiesImages from "../../composables/images/raritiesImages";
+import statsImages from "../../composables/images/statsImages";
+import cardsImages from "../../composables/images/cardsImages";
 
 export default {
   name: "CardTable",
   components: {NoDataMatch, Pagination},
   props: ["cards", "nCardToDisplay"],
   setup(props) {
+    const {getFirstEdPublicImage} = cardsImages()
+    const {getRarityImageByInput} = raritiesImages()
+    const {
+      getResourcesImageByInput,
+      getAttackImage,
+      getCostImage,
+      getDefenseImage,
+      getIntellectImage,
+      getLifeImage
+    } = statsImages()
+
     const display = ref(props.cards.slice(0, props.nCardToDisplay))
 
-    const getPublicImageGCP = (setCode, cardCode) => {
-      // let setRegex = new RegExp("^.[A-Z-]{0,4}");
-      // let set = setRegex.exec(cardCode)[0].toLowerCase();
-      // require(`@/assets/imgs/${matches[0].toLowerCase()}/${cardCode}.png`)
-      if (setCode !== undefined && cardCode !== undefined) {
-        return `https://storage.googleapis.com/fd-cards-images/${setCode.toLowerCase()}/${cardCode}.png`
-      }
-    }
-
-    const getPages = () => {
-      return Math.ceil(props.cards.length / props.nCardToDisplay)
-    }
-
     const cardsToDisplay = (page) => {
-      display.value = props.cards.slice(props.nCardToDisplay*page, props.nCardToDisplay*(page+1))
-    }
-
-    const goToCardDetails = (code) => {
-      router.push({ path: `/card-details/${code}` })
-    }
-
-    const isRed = (card) => {
-      return card.stats.resources === "1";
-    }
-    const isYellow = (card) => {
-      return card.stats.resources === "2";
-    }
-    const isBlue = (card) => {
-      return card.stats.resources === "3";
-    }
-
-    const hasIntellect = (card) => {
-      return card.stats.intellect !== "";
-    }
-    const hasLife = (card) => {
-      return card.stats.life !== "";
-    }
-    const hasPower = (card) => {
-      return card.stats.power !== "";
-    }
-    const hasDefense = (card) => {
-      return card.stats.defense !== "";
-    }
-    const hasCost = (card) => {
-      return card.stats.cost !== "";
-    }
-    const hasResources = (card) => {
-      return card.stats.resources !== "";
-    }
-    const getResourcesImage = (card) => {
-      if (card.stats.resources === "1") {
-        return require(`@/assets/imgs/icons/pitch-1.png`)
-      }
-      if (card.stats.resources === "2") {
-        return require(`@/assets/imgs/icons/pitch-2.png`)
-      }
-      if (card.stats.resources === "3") {
-        return require(`@/assets/imgs/icons/pitch-3.png`)
-      }
+      display.value = props.cards.slice(props.nCardToDisplay * page, props.nCardToDisplay * (page + 1))
     }
 
     return {
       display,
       cardsToDisplay,
-      getPages,
-      goToCardDetails,
-      getPublicImageGCP,
-      isRed, isYellow, isBlue,
-      hasIntellect,
-      hasLife,
-      hasPower,
-      hasDefense,
-      hasCost,
-      hasResources,
-      getResourcesImage
+      getPages: () => Math.ceil(props.cards.length / props.nCardToDisplay),
+      goToCardDetails: (code) => router.push({path: `/card-details/${code}`}),
+      getFirstEdPublicImage,
+      isRed: (resources) => resources === "1",
+      isYellow: (resources) => resources === "2",
+      isBlue: (resources) => resources === "3",
+      hasIntellect: (intellect) => intellect !== "",
+      hasLife: (life) => life !== "",
+      hasPower: (power) => power !== "",
+      hasDefense: (defense) => defense !== "",
+      hasCost: (cost) => cost !== "",
+      hasResources: (resources) => resources !== "",
+      getResourcesImage: (resources) => getResourcesImageByInput(resources),
+      getRarityImage: (rarity) => getRarityImageByInput(rarity),
+      getAttackImage,
+      getCostImage,
+      getDefenseImage,
+      getIntellectImage,
+      getLifeImage
     }
   }
 }
@@ -218,27 +172,38 @@ export default {
   width: 8rem;
   overflow: hidden;
 }
+
 .crop-container img {
   width: 8rem;
   margin-bottom: -85%;
 }
+
 .crop-container img:hover {
   margin-bottom: 0px;
 }
+
 .stats-icon-padding {
-  padding: 0 0.5rem 0 0;
+  padding: 0 0.5rem 0.2rem 0;
 }
+
 .stats-icon-size {
   width: 1.5rem;
 }
+
+.rarity-icon-size {
+  width: 1rem;
+}
+
 .top-border-red {
   border-top-style: solid;
   border-top-color: red;
 }
+
 .top-border-yellow {
   border-top-style: solid;
   border-top-color: yellow;
 }
+
 .top-border-blue {
   border-top-style: solid;
   border-top-color: deepskyblue;
