@@ -9,8 +9,11 @@
     <!--<div  v-for="card in cards" :key="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">-->
     <div v-for="card in display" v-if="cards.length">
       <div v-if="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
-        <div class="card" style="width: 10rem;" @click="goToCardDetails(card.cardCode)">
-          {{ card.cardCode }}
+        <div class="card" :style="cardSizeStyle" @click="goToCardDetails(card.cardCode)">
+
+          <div v-if="hasTitle()">
+            {{ card.cardCode }}
+          </div>
 
           <img class="card-img-top" v-bind:alt="card.cardCode" v-bind:src="getFirstEdPublicImage(card.imagesPaths)"/>
 
@@ -39,6 +42,8 @@ import {ref} from "vue";
 import Pagination from "../common/Pagination";
 import router from "../../router";
 import cardsImages from "../../composables/images/cardsImages";
+import {useSearchSettingsStore} from "../../stores/searcherSettingsStore";
+import {storeToRefs} from "pinia/dist/pinia";
 
 export default {
   name: "CardGrid",
@@ -49,11 +54,22 @@ export default {
   },
   setup(props) {
     const {getFirstEdPublicImage} = cardsImages()
+    const searchSettings = useSearchSettingsStore()
+    const { gridHasTitle } = storeToRefs(searchSettings);
 
     const display = ref(props.cards.slice(0, props.nCardToDisplay))
     const cardsToDisplay = (page) => {
       display.value = props.cards.slice(props.nCardToDisplay*page, props.nCardToDisplay*(page+1))
     }
+
+    let cardSizeStyle = ref({
+      width: "10rem"
+    })
+
+    searchSettings.$subscribe((mutation, state)=>{
+      cardSizeStyle.value.width = state.gridImageCurrentSize +"rem"
+    })
+
 
     return {
       display,
@@ -61,6 +77,8 @@ export default {
       getPages: () => Math.ceil(props.cards.length / props.nCardToDisplay),
       goToCardDetails: (code) => router.push({path: `/card-details/${code}`}),
       getFirstEdPublicImage,
+      hasTitle: () => gridHasTitle.value,
+      cardSizeStyle
     }
   }
 }
@@ -73,4 +91,5 @@ export default {
   margin-right: -5px;
   margin-left: -5px;
 }
+
 </style>

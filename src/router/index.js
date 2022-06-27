@@ -9,7 +9,8 @@ const routes = [
   {
     path: '/card-search',
     name: 'CardsSearch',
-    component: () => import('../views/CardsSearch.vue')
+    component: () => import('../views/CardsSearch.vue'),
+    props: route => ({ set: route.query.set })
   },
   {
     path: '/card-details/:code?',

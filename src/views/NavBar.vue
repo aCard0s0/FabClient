@@ -15,7 +15,7 @@
       <div id="navBar" class="collapse navbar-collapse" style="margin-left: 3rem">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/card-search">Card Searcher</router-link>
+            <router-link to="/card-search">Card Search</router-link>
           </li>
          <!-- <li class="nav-item dropdown">
             <a id="navbarDropdown" aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -36,7 +36,7 @@
 
         <hr>
 
-        <div class="align-items-center">
+        <!--<div class="align-items-center">
           <button class="btn btn-link" type="button">
             Login
           </button>
@@ -45,7 +45,7 @@
           <button class="btn btn-primary" type="button">
             Sign up
           </button>
-        </div>
+        </div>-->
       </div>
     </div>
   </nav>
