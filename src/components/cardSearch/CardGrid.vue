@@ -6,6 +6,9 @@
       @update:show-page="cardsToDisplay"/>
 
   <div class="grid-container justify-content-center">
+
+    <NoDataMatch v-if="display.length === 0"/>
+
     <!--<div  v-for="card in cards" :key="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">-->
     <div v-for="card in display" v-if="cards.length">
       <div v-if="card" style="padding-right: 5px; padding-left: 5px; padding-bottom: 5px;">
@@ -41,13 +44,14 @@
 import {ref} from "vue";
 import Pagination from "../common/Pagination";
 import router from "../../router";
+import NoDataMatch from "./NoDataMatch";
 import cardsImages from "../../composables/images/cardsImages";
 import {useSearchSettingsStore} from "../../stores/searcherSettingsStore";
 import {storeToRefs} from "pinia/dist/pinia";
 
 export default {
   name: "CardGrid",
-  components: {Pagination},
+  components: {Pagination, NoDataMatch},
   props: ["cards", "nCardToDisplay"],
   computed: {
     testing() {console.log("testing compute")}

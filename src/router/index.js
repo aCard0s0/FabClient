@@ -10,7 +10,6 @@ const routes = [
     path: '/card-search',
     name: 'CardsSearch',
     component: () => import('../views/CardsSearch.vue'),
-    props: route => ({ set: route.query.set })
   },
   {
     path: '/card-details/:code?',
@@ -29,6 +28,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Feedback.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: () => import('../views/Home.vue')
   }
 ]
 

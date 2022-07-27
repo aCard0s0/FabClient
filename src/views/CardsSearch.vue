@@ -36,17 +36,18 @@
     <div class="col-sm-10">
       <nav>
         <div id="nav-tab" class="nav nav-tabs justify-content-end" role="tablist">
+          <!-- Grid BTT -->
           <button id="nav-grid-tab" aria-controls="nav-grid" aria-selected="true" class="nav-link active"
                   data-bs-target="#nav-grid" data-bs-toggle="tab" role="tab" type="button">
             <font-awesome-icon icon="grip-horizontal"/>
             Grid
           </button>
+          <!-- Table BTT -->
           <button id="nav-table-tab" aria-controls="nav-table" aria-selected="false" class="nav-link"
                   data-bs-target="#nav-table" data-bs-toggle="tab" role="tab" type="button">
             <font-awesome-icon icon="grip-lines"/>
             Table
           </button>
-
 
           <!-- Settings-->
           <div class="dropdown">
@@ -132,12 +133,12 @@ import {storeToRefs} from "pinia/dist/pinia";
 export default {
   name: "CardSearcher",
   components: {SearchBar, SideFilter, CardTable, CardGrid},
-  setup(props) {
+  setup() {
     const {cards, loadCards} = getCardsSearch()
     const store = queryStore()
     const nCardToDisplay = ref(36)
     // Side Filters
-    const checkedSets = ref(["wtr"])
+    const checkedSets = ref([])
     const checkedRarities = ref([])
     const clazz = ref("")
     const talent = ref("")
@@ -151,7 +152,6 @@ export default {
     const checkedFrames = ref([])
 
     onMounted(() => {
-      console.log(props.set)
       handleQuerySubmit(store.getQuery)
     })
 
@@ -233,8 +233,6 @@ export default {
       )
     }
 
-
-
     const searchSettings = useSearchSettingsStore()
     const { gridHasTitle, maximize } = storeToRefs(searchSettings);
     const {
@@ -245,9 +243,7 @@ export default {
     let zoom = ref(10)
     searchSettings.$subscribe((mutation, state) => {
       zoom.value = state.gridImageCurrentSize
-      console.log(zoom.value)
     })
-
 
     return {
       cards,
@@ -279,7 +275,6 @@ export default {
 </script>
 
 <style scoped>
-
 .setting-menu {
   padding: 1rem 0.75rem 1rem 0.75rem;
   width: 15rem;
@@ -293,5 +288,4 @@ export default {
 hr {
   margin: 0.5rem 0 0.5rem 0 !important;
 }
-
 </style>

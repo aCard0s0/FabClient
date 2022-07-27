@@ -3,15 +3,6 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
 
-      <router-link to="/" class="navbar-brand me-2">
-        <img src="@/assets/imgs/logo/fabledeck-logo.png" style="width: 8rem"/>
-      </router-link>
-
-      <button aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-              data-bs-target="#navBar" data-bs-toggle="collapse" type="button">
-        <font-awesome-icon icon="bars" />
-      </button>
-
       <div id="navBar" class="collapse navbar-collapse" style="margin-left: 3rem">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -33,6 +24,15 @@
           </li> -->
 
         </ul>
+
+        <button aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navBar" data-bs-toggle="collapse" type="button">
+          <font-awesome-icon icon="bars" />
+        </button>
+
+        <router-link to="/" class="navbar-brand me-2">
+          <img src="@/assets/imgs/logo/fabledeck-logo.png" style="width: 8rem"/>
+        </router-link>
 
         <hr>
 
