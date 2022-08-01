@@ -286,14 +286,16 @@
 
 <script>
 
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import getReleases from "../../composables/filters/getReleases";
 import getRarities from "../../composables/filters/getRarities";
 import getFrames from "../../composables/filters/getFrames";
-import getClassOptions from "../../composables/filters/getClassOptions";
-import getTalentOptions from "../../composables/filters/getTalentOptions";
-import getTypeOptions from "../../composables/filters/getTypeOptions";
+import getClassOptions, {getClassByName} from "../../composables/filters/getClassOptions";
+import getTalentOptions, {getTalentByName} from "../../composables/filters/getTalentOptions";
+import getTypeOptions, {getTypeByName} from "../../composables/filters/getTypeOptions";
 import getResourceOptions from "../../composables/filters/getResourceOptions";
+import {useRouter} from "vue-router/dist/vue-router";
+import {useRoute} from "vue-router";
 
 export default {
   name: "SideFilter",
@@ -336,6 +338,79 @@ export default {
     const isAllSetsChecked = ref(false)
     const isAllRaritiesChecked = ref(false)
 
+    const router = useRouter()
+    const route = useRoute()
+
+    onMounted(() => {
+
+      if (Object.keys(route.query).length === 0) {
+        checkedSets.value = ["wtr"]
+        router.push({query: Object.assign({}, route.query, {set: String("wtr")})})
+
+      } else {
+        if (strNotNullOrCanSplit(route.query.set, ',')) {
+          route.query.set.split(",").forEach(
+              s => checkedSets.value.push(String(s))
+          )
+          console.log(checkedSets.value)
+        }
+
+        if (strNotNullOrCanSplit(route.query.rarities, ',')) {
+          route.query.rarities.split(",").forEach(
+              s => checkedRarities.value.push(String(s))
+          )
+        }
+
+        if (route.query.class) {
+          onSelectClazz(getClassByName(route.query.class))
+        }
+
+        if (route.query.talent) {
+          onSelectTalent(getTalentByName(route.query.talent))
+        }
+
+        if (route.query.type) {
+          onSelectType(getTypeByName(route.query.type))
+        }
+
+        if (strNotNullOrCanSplit(route.query.resources, ',')) {
+          route.query.resources.split(",").forEach(
+              r => checkedResources.value.push(String(r))
+          )
+        }
+
+        if (route.query.cost) {
+          cost.value = route.query.cost
+        }
+
+        if (route.query.power) {
+          power.value = route.query.power
+        }
+
+        if (route.query.defense) {
+          defense.value = route.query.defense
+        }
+
+        if (route.query.intellect) {
+          intellect.value = route.query.intellect
+        }
+
+        if (route.query.life) {
+          life.value = route.query.life
+        }
+
+        if (strNotNullOrCanSplit(route.query.frames, ',')) {
+          route.query.frames.split(",").forEach(
+              f => checkedFrames.value.push(String(f))
+          )
+        }
+      }
+    })
+
+    let strNotNullOrCanSplit = function(str, token){
+      return str || (str || '').split(token).length > 1;
+    }
+
     const checkAllSets = () => {
       let tmpCheckedSets = []
 
@@ -353,6 +428,7 @@ export default {
       get: () => props.checkedSets,
       set: (newValue) => {
         isAllSetsChecked.value = newValue.length >= sets.length;
+        router.push({query: Object.assign({}, route.query, {set: String(newValue)})})
         context.emit("update:check-sets", newValue)
       }
     })
@@ -374,55 +450,80 @@ export default {
       get: () => props.checkedRarities,
       set: (newValue) => {
         isAllRaritiesChecked.value = newValue.length === rarities.length;
+        router.push({query: Object.assign({}, route.query, {rarities: String(rarities)})})
         context.emit("update:check-rarities", newValue)
       }
     })
 
     const onSelectClazz = (newValue) => {
+      router.push({query: Object.assign({}, route.query, {class: String(newValue.name)})})
       context.emit("update:selected-class", newValue)
     }
 
     const onSelectTalent = (newValue) => {
+      router.push({query: Object.assign({}, route.query, {talent: String(newValue.name)})})
       context.emit("update:selected-talent", newValue)
     }
 
     const onSelectType = (newValue) => {
+      router.push({query: Object.assign({}, route.query, {type: String(newValue.name)})})
       context.emit("update:selected-type", newValue)
     }
 
     let checkedResources = computed({
       get: () => props.checkedResources,
-      set: (newValue) => context.emit("update:check-resources", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {resources: String(newValue)})})
+        context.emit("update:check-resources", newValue)
+      }
     })
 
     let cost = computed({
       get: () => props.cost,
-      set: (newValue) => context.emit("update:input-cost", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {power: String(newValue)})})
+        context.emit("update:input-cost", newValue)
+      }
     })
 
     let power = computed({
       get: () => props.power,
-      set: (newValue) => context.emit("update:input-power", newValue)
+      set: (newValue) =>{
+        router.push({query: Object.assign({}, route.query, {power: String(newValue)})})
+        context.emit("update:input-power", newValue)
+      }
     })
 
     let defense = computed({
       get: () => props.defense,
-      set: (newValue) => context.emit("update:input-defense", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {defense: String(newValue)})})
+        context.emit("update:input-defense", newValue)
+      }
     })
 
     let intellect = computed({
       get: () => props.intellect,
-      set: (newValue) => context.emit("update:input-intellect", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {intellect: String(newValue)})})
+        context.emit("update:input-intellect", newValue)
+      }
     })
 
     let life = computed({
       get: () => props.life,
-      set: (newValue) => context.emit("update:input-life", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {life: String(newValue)})})
+        context.emit("update:input-life", newValue)
+      }
     })
 
     let checkedFrames = computed({
       get: () => props.checkedFrames,
-      set: (newValue) => context.emit("update:check-frames", newValue)
+      set: (newValue) => {
+        router.push({query: Object.assign({}, route.query, {frames: String(frames)})})
+        context.emit("update:check-frames", newValue)
+      }
     })
 
     const showResetFilterBtt = () => {

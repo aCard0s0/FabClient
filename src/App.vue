@@ -20,12 +20,9 @@
   color: #2c3e50;
 }
 
-@media (min-width: 1305px) {
-  .container-fluid{
-    width: 1300px;
-  }
+.container-fluid {
+  padding: 0 50px 0 50px !important;
 }
-
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited  {
   background-color: #e5b55d !important;

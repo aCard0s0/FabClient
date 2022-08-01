@@ -36,58 +36,61 @@
     <div class="col-sm-10">
       <nav>
         <div id="nav-tab" class="nav nav-tabs justify-content-end" role="tablist">
-          <button
-              id="nav-table-tab" aria-controls="nav-table" aria-selected="false" class="nav-link active"
-              data-bs-target="#nav-table" data-bs-toggle="tab" role="tab" type="button">
-            <font-awesome-icon icon="grip-lines"/>
-            Table
-          </button>
-          <button id="nav-grid-tab" aria-controls="nav-grid" aria-selected="true" class="nav-link"
+          <!-- Grid BTT -->
+          <button id="nav-grid-tab" aria-controls="nav-grid" aria-selected="true" class="nav-link active"
                   data-bs-target="#nav-grid" data-bs-toggle="tab" role="tab" type="button">
             <font-awesome-icon icon="grip-horizontal"/>
             Grid
           </button>
+          <!-- Table BTT -->
+          <button id="nav-table-tab" aria-controls="nav-table" aria-selected="false" class="nav-link"
+                  data-bs-target="#nav-table" data-bs-toggle="tab" role="tab" type="button">
+            <font-awesome-icon icon="grip-lines"/>
+            Table
+          </button>
 
           <!-- Settings-->
-          <div class="dropdown" >
+          <div class="dropdown">
             <button class="btn nav-link dropdown-toggle" type="button" id="dropdownSettings" data-bs-toggle="dropdown" aria-expanded="false">
               <font-awesome-icon icon="cogs"/>
             </button>
-            <div class="dropdown-menu setting-menu justify-content-center" style="" aria-labelledby="dropdownSettings" >
+            <div class="dropdown-menu setting-menu justify-content-center"  aria-labelledby="dropdownSettings" >
               <!-- Page Size -->
               <div class="row" @click.stop.prevent>
-                <div class="input-group-sm">
+                <div class="input-group-lg">
                   Page Size:
                   <input type="text" pattern="[0-9]{4}" size="4" maxlength="4" v-model="nCardToDisplay"/>
+                  &nbsp;&nbsp;&nbsp;
                 </div>
               </div>
               <hr />
               <!-- Image size-->
               <div class="row" @click.stop.prevent>
                 <div class="input-group-sm">
-                  Zoom:
+                  Grid Zoom:
                   <button type="button" class="btn btn-primary setting-buttons" @click="decreaseImageSize">-</button>
-                  1.0
+                  {{ cardSize() }}
                   <button type="button" class="btn btn-primary setting-buttons" @click="increaseImageSize">+</button>
+                  &nbsp;&nbsp;&nbsp;
                 </div>
               </div>
               <hr />
-              <!-- Mouse Over Zoom -->
+              <!-- Mouse Over Zoom
               <div class="row">
                 <div class="col-12">
                   <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="maximize"/>
+                    <input class="form-check-input" type="checkbox" v-model="maximize" @click="changeMaximize()" />
                     Maximize
                   </div>
                 </div>
               </div>
-              <hr />
+              <hr />-->
               <!-- Show grid title -->
               <div class="row">
                 <div class="col-12">
                   <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="cardTitle" />
-                    Card Title
+                    <input class="form-check-input" type="checkbox" v-model="gridHasTitle" @click="changeGridHasTitle()" />
+                    Grid Card Code&nbsp;&nbsp;&nbsp;
                   </div>
                 </div>
               </div>
@@ -98,14 +101,14 @@
       </nav>
 
       <div id="nav-tabContent" class="tab-content">
-        <div id="nav-table" aria-labelledby="nav-table-tab" class="tab-pane fade show active" role="tabpanel">
-          <CardTable
+        <div id="nav-grid" aria-labelledby="nav-grid-tab" class="tab-pane fade show active" role="tabpanel">
+          <CardGrid
               :key="{cards, nCardToDisplay}"
               :cards="cards"
               :nCardToDisplay="nCardToDisplay"/>
         </div>
-        <div id="nav-grid" aria-labelledby="nav-grid-tab" class="tab-pane fade" role="tabpanel">
-          <CardGrid
+        <div id="nav-table" aria-labelledby="nav-tab-tab" class="tab-pane fade" role="tabpanel">
+          <CardTable
               :key="{cards, nCardToDisplay}"
               :cards="cards"
               :nCardToDisplay="nCardToDisplay"/>
@@ -124,6 +127,8 @@ import getCardsSearch from "../composables/getCardsSearch";
 import SideFilter from "../components/cardSearch/SideFilter";
 import SearchBar from "../components/cardSearch/SearchBar";
 import {queryStore} from "../stores/queryStore";
+import {useSearchSettingsStore} from "../stores/searcherSettingsStore";
+import {storeToRefs} from "pinia/dist/pinia";
 
 export default {
   name: "CardSearcher",
@@ -131,9 +136,9 @@ export default {
   setup() {
     const {cards, loadCards} = getCardsSearch()
     const store = queryStore()
-    const nCardToDisplay = ref(28)
+    const nCardToDisplay = ref(36)
     // Side Filters
-    const checkedSets = ref(["wtr"])
+    const checkedSets = ref([])
     const checkedRarities = ref([])
     const clazz = ref("")
     const talent = ref("")
@@ -228,17 +233,17 @@ export default {
       )
     }
 
-    const decreaseImageSize = () => {
-      console.log("-")
-    }
+    const searchSettings = useSearchSettingsStore()
+    const { gridHasTitle, maximize } = storeToRefs(searchSettings);
+    const {
+      changeGridHasTitle, changeMaximize,
+      increaseImageSize, decreaseImageSize
+    } = searchSettings
 
-    const increaseImageSize = () => {
-      console.log("+")
-    }
-
-    const maximize = ref(true)
-    const cardTitle = ref(true)
-
+    let zoom = ref(10)
+    searchSettings.$subscribe((mutation, state) => {
+      zoom.value = state.gridImageCurrentSize
+    })
 
     return {
       cards,
@@ -259,18 +264,20 @@ export default {
       checkedFrames, updateCheckedFrames,
       decreaseImageSize,
       increaseImageSize,
+      cardSize: () => (10 * 0.1).toFixed(1),
+      gridHasTitle,
+      changeGridHasTitle: () => changeGridHasTitle(),
       maximize,
-      cardTitle
+      changeMaximize: () => changeMaximize()
     }
   }
 }
 </script>
 
 <style scoped>
-
 .setting-menu {
   padding: 1rem 0.75rem 1rem 0.75rem;
-  width: 10rem;
+  width: 15rem;
 }
 
 .setting-buttons {
@@ -281,5 +288,4 @@ export default {
 hr {
   margin: 0.5rem 0 0.5rem 0 !important;
 }
-
 </style>

@@ -1,7 +1,7 @@
 <template>
   <tr >
     <td colspan="100%">
-      <h1>No data matching your filters</h1>
+      <h2>No matching data to your filters</h2>
     </td>
   </tr>
 </template>

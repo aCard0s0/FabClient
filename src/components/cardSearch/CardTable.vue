@@ -120,7 +120,7 @@ import cardsImages from "../../composables/images/cardsImages";
 
 export default {
   name: "CardTable",
-  components: {NoDataMatch, Pagination},
+  components: {Pagination, NoDataMatch},
   props: ["cards", "nCardToDisplay"],
   setup(props) {
     const {getFirstEdPublicImage} = cardsImages()
